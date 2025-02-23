@@ -15,7 +15,7 @@ fun MainApp() {
     Surface(modifier = Modifier.fillMaxSize()) {
         val navController = rememberNavController()
 
-        NavHost(navController = navController, startDestination = "category") {
+        NavHost(navController = navController, startDestination = "categorygi") {
             composable(route = "login") {
                 SignInScreen(navController = navController)
             }
