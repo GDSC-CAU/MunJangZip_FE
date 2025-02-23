@@ -8,13 +8,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.munjangzip.feature.auth.signin.SignInScreen
+import com.example.munjangzip.feature.category.CategoryScreen
 
 @Composable
 fun MainApp() {
     Surface(modifier = Modifier.fillMaxSize()) {
         val navController = rememberNavController()
 
-        NavHost(navController = navController, startDestination = "login") {
+        NavHost(navController = navController, startDestination = "category") {
             composable(route = "login") {
                 SignInScreen(navController = navController)
             }
@@ -24,7 +25,7 @@ fun MainApp() {
             }
 
             composable(route = "category") {
-
+                CategoryScreen(navController = navController)
             }
 
         }

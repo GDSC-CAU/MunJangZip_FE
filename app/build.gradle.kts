@@ -69,6 +69,8 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
 
+    implementation("androidx.activity:activity-compose:1.8.2")
+
 }
 
 
