@@ -20,3 +20,10 @@ category
 savebook   
 ![image](https://github.com/user-attachments/assets/50226c1e-9652-46c3-9dfe-50ae87431e16)
 
+이 페이지들은 앞으로 새로운 패키지 만들어서 작업 하면 됨
+![image](https://github.com/user-attachments/assets/b5881ef6-3b55-4779-b2fb-e5a5786c588d)
+![image](https://github.com/user-attachments/assets/781a7926-9f22-46d5-9b2e-81992fcb04e3)
+
+작성한 코드들 중에서 참고할 문서나 코드는 노션에 업로드 함
+아직 API명세 참고 안하고 UI만 짰는데
+서버에서 받아온 데이터들은 viewmodel로 클래스 만들어서 다루면 될 것 같음
