@@ -2,6 +2,7 @@ package com.example.munjangzip.feature.category
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -58,6 +59,9 @@ fun BookCategoryPager() { //카테고리를 가로 스크롤로 확인
                         stop = 1f,
                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                     )
+                }
+                .clickable {
+
                 }
         ) {
             Image(

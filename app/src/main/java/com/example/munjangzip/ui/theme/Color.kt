@@ -13,3 +13,5 @@ val Pink40 = Color(0xFF7D5260)
 
 val PeachYellow = Color(0xFFFFE7AE)
 val BrightYellow = Color(0xfffff2d3)
+val Ivory = Color(0xfffffef3)
+val Gray10 = Color(0xff888888)
