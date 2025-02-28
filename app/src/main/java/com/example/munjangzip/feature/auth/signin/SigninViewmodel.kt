@@ -1,3 +1,5 @@
+// 로그인 관련 데이터관리 view
+
 package com.example.munjangzip.feature.auth.signin
 
 import androidx.lifecycle.ViewModel

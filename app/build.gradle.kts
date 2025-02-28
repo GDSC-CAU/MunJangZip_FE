@@ -63,6 +63,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("androidx.compose.material3:material3") //ff
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
