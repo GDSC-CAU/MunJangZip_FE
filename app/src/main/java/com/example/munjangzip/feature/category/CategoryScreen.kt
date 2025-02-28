@@ -156,6 +156,26 @@ fun CategoryScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.padding(16.dp))
             BookCategoryPager()
+            Spacer(modifier = Modifier.padding(13.dp))
+
+            Button(
+                modifier = Modifier
+                    .height(37.dp)
+                    .width(100.dp)
+                    .shadow(elevation = 8.dp, shape = RoundedCornerShape(15.dp)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White.copy(alpha = 0.9f),
+                    contentColor = Color.DarkGray
+                ),
+                shape = RoundedCornerShape(15.dp),
+                onClick = { /* 책 보러가기로 이동 */ }
+            ) {
+                Text(
+                    text = "책 보기",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
 
     }
