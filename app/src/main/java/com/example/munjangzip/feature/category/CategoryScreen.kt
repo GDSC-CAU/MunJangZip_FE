@@ -115,14 +115,13 @@ fun CategoryScreen(navController: NavController) {
                         .zIndex(0f), // 버튼의 zIndex를 낮게 설정
 
 
-
                     colors = ButtonDefaults.buttonColors(
                         containerColor = BrightYellow,
                         contentColor = Color.Black,
                         disabledContainerColor = Color.Gray,
                         disabledContentColor = Color.White
                     ),
-                    onClick = {},
+                    onClick = {navController.navigate("addCategory")},//카테고리 추가 페이지로 이동
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Text(
