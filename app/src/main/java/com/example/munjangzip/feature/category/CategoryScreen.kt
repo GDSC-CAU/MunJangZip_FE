@@ -48,7 +48,6 @@ import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.ui.theme.BrightYellow
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryScreen(navController: NavController) {
@@ -155,7 +154,7 @@ fun CategoryScreen(navController: NavController) {
             }
 
             Spacer(modifier = Modifier.padding(16.dp))
-            BookCategoryPager()
+            BookCategoryPager(navController)
             Spacer(modifier = Modifier.padding(13.dp))
 
             Button(

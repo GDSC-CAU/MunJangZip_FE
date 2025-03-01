@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.munjangzip.R
+import com.example.munjangzip.appbar.TopBarWidget
 import com.example.munjangzip.ui.BackGroundBubble
 
 val LightYellow = Color(0xFFFFF2D3) // 연한 노란색
@@ -27,26 +28,7 @@ fun AddCategoryScreen(navController: NavController) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) { // 뒤로 가기 버튼
-                        Icon(
-                            painter = painterResource(R.drawable.chevron_left),
-                            contentDescription = "뒤로가기"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { /* 나중에 내정보 페이지로 이동 해야됨 */ }) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_paw),
-                            contentDescription = "내정보 페이지 이동"
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent) // TopBar 투명
-            )
+            TopBarWidget(navController)
         }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {

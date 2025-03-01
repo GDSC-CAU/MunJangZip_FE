@@ -1,6 +1,7 @@
 package com.example.munjangzip.feature.booklist
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.munjangzip.R
 
 @Composable
 fun BookListGrid(
+    navController: NavController
 ) {
     val images = listOf( //테스트를 위해 이미지를 불러옴
         R.drawable.book1,
@@ -27,7 +30,7 @@ fun BookListGrid(
 
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(3),
         //verticalItemSpacing = 4.dp,
 
         contentPadding = PaddingValues(
@@ -41,14 +44,15 @@ fun BookListGrid(
                 Card(
                     modifier = Modifier
                         .padding(8.dp)
-                        .size(width = 40. dp, height = 240.dp)
+                        .size(width = 40. dp, height = 160.dp)
 
                 ) {
-                    if (index == images.size) {
+                    if (index == images.size) { //그리드 마지막은 addbook 표시 띄우기
                         Image(
                             painter = painterResource(R.drawable.addbook),
                             contentDescription = "Book Image $index",
-                            contentScale = ContentScale.Crop
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.clickable { navController.navigate("takephoto") }
                         )
                     }
                     else {

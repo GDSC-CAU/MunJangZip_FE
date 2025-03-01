@@ -20,7 +20,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -52,10 +54,10 @@ fun BookListScreen(navController: NavController) {
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            IconButton(onClick = {}) {
+                            IconButton(onClick = {navController.popBackStack()}) {
                                 Image(
                                     painter = painterResource(R.drawable.chevron_left),
-                                    contentDescription = null,
+                                    contentDescription = "뒤로 가기",
                                 )
                             }
                             Spacer(modifier = Modifier.padding(12.dp))
@@ -65,11 +67,18 @@ fun BookListScreen(navController: NavController) {
                                 horizontalAlignment = Alignment.Start
                             ) {
                                 Text(
-                                    "수정 님의" , fontSize = 12.sp
+                                    "수정 님의" ,
+                                    fontSize = 14.sp,
+                                    color = Color.Gray,
+                                    fontWeight = FontWeight.Medium
                                 )
                                 Text(
-                                    " '말랑말랑' 도서관"
-                                )
+                                    "'말랑말랑' 도서관",
+                                    fontSize = 20.sp,
+                                    color = Color.DarkGray,
+                                    fontWeight = FontWeight.Bold,
+
+                                    )
                             }
                         }
 
@@ -102,7 +111,7 @@ fun BookListScreen(navController: NavController) {
                 .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            BookListGrid()
+            BookListGrid(navController)
         }
     }
 }
