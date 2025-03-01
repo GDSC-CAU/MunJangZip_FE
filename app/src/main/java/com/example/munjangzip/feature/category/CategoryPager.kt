@@ -17,12 +17,13 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import androidx.navigation.NavController
 import com.example.munjangzip.R
 import kotlin.math.absoluteValue
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun BookCategoryPager() { //카테고리를 가로 스크롤로 확인
+fun BookCategoryPager(navController: NavController) { //카테고리를 가로 스크롤로 확인
 
     val images = listOf( //테스트를 위해 이미지를 불러옴
         R.drawable.book1,
@@ -61,7 +62,7 @@ fun BookCategoryPager() { //카테고리를 가로 스크롤로 확인
                     )
                 }
                 .clickable {
-
+                    navController.navigate("booklist")
                 }
         ) {
             Image(

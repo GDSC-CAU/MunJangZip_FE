@@ -51,10 +51,10 @@ fun BookListScreen(navController: NavController) {
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            IconButton(onClick = {}) {
+                            IconButton(onClick = {navController.popBackStack()}) {
                                 Image(
                                     painter = painterResource(R.drawable.chevron_left),
-                                    contentDescription = null,
+                                    contentDescription = "뒤로 가기",
                                 )
                             }
                             Spacer(modifier = Modifier.padding(12.dp))
@@ -101,7 +101,7 @@ fun BookListScreen(navController: NavController) {
                 .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            BookListGrid()
+            BookListGrid(navController)
         }
     }
 }

@@ -36,13 +36,21 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.munjangzip.R
+import com.example.munjangzip.appbar.TopBarWidget
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.ui.theme.Gray10
 import com.example.munjangzip.ui.theme.Ivory
 
 @Composable
 fun TakePhotoPage(navController: NavController) {
-    Scaffold() {
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopBarWidget(navController)
+        }
+    ) {
+
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
