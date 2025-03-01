@@ -7,6 +7,10 @@ MainAppComposable.kt
 ## ui 패키지
 BackGround.kt   
 배경(초원 그림 + 고양이)   
+
+BackGroundBubble.kt  
+배경 (초원 그림 + 고양이 + 말풍선)   
+
 ### theme 패키지 (기본으로 있는 패키지)
 Color.kt   
 커스텀 색상 추가하고 싶으면 여기에 추가

@@ -26,7 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGround
-import com.example.munjangzip.ui.theme.PeachYellow
+import com.example.munjangzip.ui.theme.BrightYellow
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,7 +45,7 @@ fun BookListScreen(navController: NavController) {
                 TopAppBar(
                     modifier = Modifier.height(100.dp),
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = PeachYellow
+                        containerColor = BrightYellow
                     ),
                     title = {
                         Row(
