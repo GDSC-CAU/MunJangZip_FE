@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,7 +47,6 @@ import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.ui.theme.BrightYellow
-import com.example.munjangzip.ui.theme.PeachYellow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -155,7 +155,6 @@ fun CategoryScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.padding(16.dp))
             BookCategoryPager(navController)
-            BookCategoryPager()
             Spacer(modifier = Modifier.padding(13.dp))
 
             Button(
