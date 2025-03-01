@@ -72,7 +72,7 @@ fun AddCategoryScreen(navController: NavController) {
                         textStyle = TextStyle(
                             textAlign = TextAlign.Start,
                             fontSize = 16.sp,
-                            color = Color.Gray // 입력 텍스트 색상 변경
+                            color = Color.Gray
                         ),
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = LightYellow,

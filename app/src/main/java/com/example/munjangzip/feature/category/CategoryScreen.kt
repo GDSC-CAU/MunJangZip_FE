@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,7 +47,7 @@ import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.ui.theme.BrightYellow
-import com.example.munjangzip.ui.theme.PeachYellow
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,7 +58,7 @@ fun CategoryScreen(navController: NavController) {
         topBar = {
             Surface(
                 modifier = Modifier.height(130.dp),
-                shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 32.dp),
+                shape = RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp),
                 shadowElevation = 8.dp
                 //color =
             )
@@ -65,19 +66,28 @@ fun CategoryScreen(navController: NavController) {
                 TopAppBar(
                     modifier = Modifier.height(100.dp),
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = PeachYellow
+                        containerColor = BrightYellow
                     ),
                     title = {
                         Column(
                             verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(start = 16.dp),
                             horizontalAlignment = Alignment.Start
                         ) {
                             Text(
-                                "수정 님의" , fontSize = 12.sp
+                                "수정 님의" ,
+                                fontSize = 14.sp,
+                                color = Color.Gray,
+                                fontWeight = FontWeight.Medium
                             )
                             Text(
-                                " '말랑말랑' 도서관"
+                                "'말랑말랑' 도서관",
+                                fontSize = 20.sp,
+                                color = Color.DarkGray,
+                                fontWeight = FontWeight.Bold,
+
                             )
                         }
 
@@ -101,34 +111,33 @@ fun CategoryScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.padding(vertical = 20.dp))
-
             Box(
                 contentAlignment = Alignment.Center
             )
             {
                 // 버튼 (뒤쪽 - 낮은 zIndex)
                 ElevatedButton(
-
                     modifier = Modifier
                         .padding(16.dp)
-                        .height(49.dp)
-                        .zIndex(0f), // 버튼의 zIndex를 낮게 설정
-
+                        .height(65.dp)
+                        .width(200.dp),
+                        //.zIndex(0f), // 버튼의 zIndex를 낮게 설정
 
                     colors = ButtonDefaults.buttonColors(
                         containerColor = BrightYellow,
-                        contentColor = Color.Black,
+                        contentColor = Color.Gray,
                         disabledContainerColor = Color.Gray,
                         disabledContentColor = Color.White
                     ),
                     onClick = {navController.navigate("addCategory")},//카테고리 추가 페이지로 이동
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(20.dp)
                 ) {
                     Text(
-                        text = "   카테고리 추가하기",
+                        text = "카테고리 추가하기",
+                        modifier = Modifier.padding(start = 8.dp),//왼쪽 패딩 (붕어랑 안겹치게)
                         style = TextStyle(
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight(500),
+                            fontSize = 17.sp,
+                            fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.Monospace
                         )
                     )
@@ -140,18 +149,36 @@ fun CategoryScreen(navController: NavController) {
                     contentDescription = null,
                     modifier = Modifier
                         .zIndex(1f)// 이미지의 zIndex를 높게 설정
-                        .offset(x = (-86).dp)
+                        .offset(x = (-105).dp)
+                        .size(100.dp)
                 )
             }
 
             Spacer(modifier = Modifier.padding(16.dp))
             BookCategoryPager()
+            Spacer(modifier = Modifier.padding(13.dp))
+
+            Button(
+                modifier = Modifier
+                    .height(37.dp)
+                    .width(100.dp)
+                    .shadow(elevation = 8.dp, shape = RoundedCornerShape(15.dp)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White.copy(alpha = 0.9f),
+                    contentColor = Color.DarkGray
+                ),
+                shape = RoundedCornerShape(15.dp),
+                onClick = { /* 책 보러가기로 이동 */ }
+            ) {
+                Text(
+                    text = "책 보기",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
 
     }
-
-
-
 
 }
 
