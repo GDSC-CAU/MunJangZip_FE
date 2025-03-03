@@ -1,5 +1,5 @@
 /*###################
-##   책 상세 페이지   ##
+#### 책 상세 페이지 ####
 ###################*/
 package com.example.munjangzip.feature.books
 
@@ -27,22 +27,24 @@ import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.appbar.TopBarWidget
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import com.google.accompanist.pager.*
+import androidx.compose.ui.graphics.graphicsLayer
+import kotlin.math.absoluteValue
+import androidx.compose.ui.util.lerp
+import com.example.munjangzip.ui.theme.BrightYellow
+
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun BookDetailScreen(navController: NavController, bookId: Int) {
     val pagerState = rememberPagerState()
     val memos = listOf(
-        "메모1 가나다라마맛 마아아나앙 낭낭림ㅇㄹ",
-        "메모2 가나다라마맛 마아아나앙 낭낭림ㅇㄹ",
-        "메모3 가나다라마맛 마아아나앙 낭낭림ㅇㄹ"
+        "메모1: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ",
+        "메모2: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ",
+        "메모3: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ"
     )
 
     Scaffold(
@@ -76,34 +78,46 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                         .clip(RoundedCornerShape(16.dp))
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-                // 메모 스와이프 카드
+                // 스와이프로 메모 보기
                 HorizontalPager(
                     count = memos.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(220.dp)
                         .padding(horizontal = 16.dp)
                 ) { page ->
                     Surface(
                         shape = RoundedCornerShape(20.dp),
-                        color = Color.White.copy(alpha = 0.9f),
+                        color = Color.White, //색상도 백에서 받아오기
+                        shadowElevation = 8.dp,
                         modifier = Modifier
-                            .fillMaxWidth(0.9f)  // 메모지 가로 크기
-                            .height(150.dp)       // 메모지 세로 크기 고정
-                            .padding(vertical = 8.dp)
+                            .fillMaxWidth(0.9f)
+                            .height(180.dp)
+                            .graphicsLayer {
+                                val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
+
+                                //스와이프 시 회전&이동
+                                translationX = -pageOffset * 300f
+                                rotationY = pageOffset * 15f
+                                alpha = lerp(
+                                    start = 0.6f,
+                                    stop = 1f,
+                                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                )
+                            }
                             .clip(RoundedCornerShape(20.dp))
-                            .background(Color.White.copy(alpha = 0.9f))
-                    ){
+                    ) {
                         Column(
                             modifier = Modifier
                                 .padding(16.dp)
-                                .fillMaxSize(),  // 가득 채워서 작성일이 하단에 위치하도록
+                                .fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.SpaceBetween  // 상단에는 메모, 하단에는 작성일
+                            verticalArrangement = Arrangement.SpaceBetween
                         ) {
-                            // 메모 내용 표시 부분
+                            // 메모 내용
                             Text(
                                 text = memos[page],
                                 fontSize = 14.sp,
@@ -111,7 +125,7 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                                 color = Color.DarkGray,
                                 style = TextStyle(fontWeight = FontWeight.Medium)
                             )
-                            // 작성일 맨 하단 표시
+                            // 작성일 (하단에 고정)
                             Text(
                                 text = "작성일 : 2024.07.27",
                                 fontSize = 12.sp,
@@ -122,9 +136,6 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                         }
                     }
                 }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
                 // 페이지 인디케이터
                 HorizontalPagerIndicator(
                     pagerState = pagerState,
@@ -134,7 +145,6 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                     activeColor = Color.DarkGray,
                     inactiveColor = Color.White
                 )
-
                 Spacer(modifier = Modifier.height(10.dp))
 
                 // 메모하기 버튼
@@ -143,12 +153,12 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                     modifier = Modifier
                         .width(110.dp)
                         .height(40.dp)
-                        .clip(RoundedCornerShape(15.dp)),
+                        .clip(RoundedCornerShape(10.dp)),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFF2D3)
                     )
                 ) {
-                    Text(text = "메모하기", fontSize = 14.sp, color = Color.DarkGray)
+                    Text(text = "메모하기", fontSize = 14.sp, color = Color.DarkGray, fontWeight = FontWeight.SemiBold)
                 }
             }
         }
