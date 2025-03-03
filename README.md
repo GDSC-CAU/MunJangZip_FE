@@ -1,5 +1,5 @@
 # MunJangZip_FE
-![image](https://github.com/user-attachments/assets/fac15a47-f4f3-4d02-a812-43fb7d749277)
+![image](https://github.com/user-attachments/assets/74604545-d02c-4cfb-9b1a-c196805b89a8)
 
 MainAppComposable.kt
 페이지 이동하는 라우팅
