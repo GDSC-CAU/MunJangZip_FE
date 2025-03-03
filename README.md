@@ -15,6 +15,13 @@ BackGroundBubble.kt
 Color.kt   
 커스텀 색상 추가하고 싶으면 여기에 추가
 
+## appbar 패키지
+TopBarWidget.kt   
+
+
+![image](https://github.com/user-attachments/assets/3fd8d938-c626-4af1-a244-dc09730434e5)
+
+
 ## feature 패키지
 auth - 로그인 관련 페이지들
 
