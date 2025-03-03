@@ -1,3 +1,8 @@
+
+/*###################
+## 카테고리 생성 페이지 ##
+###################*/
+
 package com.example.munjangzip.feature.addCategory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

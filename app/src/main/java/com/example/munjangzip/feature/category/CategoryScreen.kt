@@ -1,5 +1,7 @@
+/*###################
+## 카테고리 보는 화면  ##
+###################*/
 package com.example.munjangzip.feature.category
-
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

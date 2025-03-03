@@ -45,6 +45,9 @@ fun BookListGrid(
                     modifier = Modifier
                         .padding(8.dp)
                         .size(width = 40. dp, height = 160.dp)
+                        .clickable { if (index < images.size) { //누르면 상세로 이동되게
+                            navController.navigate("bookDetail/${index}")
+                        } }
 
                 ) {
                     if (index == images.size) { //그리드 마지막은 addbook 표시 띄우기
