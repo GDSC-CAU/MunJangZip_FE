@@ -35,7 +35,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import com.google.accompanist.pager.*
 
-
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun BookDetailScreen(navController: NavController, bookId: Int) {
@@ -91,15 +90,20 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                         shape = RoundedCornerShape(20.dp),
                         color = Color.White.copy(alpha = 0.9f),
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxWidth(0.9f)  // 메모지 가로 크기
+                            .height(150.dp)       // 메모지 세로 크기 고정
                             .padding(vertical = 8.dp)
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color.White.copy(alpha = 0.9f))
-                    ) {
+                    ){
                         Column(
-                            modifier = Modifier.padding(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxSize(),  // 가득 채워서 작성일이 하단에 위치하도록
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceBetween  // 상단에는 메모, 하단에는 작성일
                         ) {
+                            // 메모 내용 표시 부분
                             Text(
                                 text = memos[page],
                                 fontSize = 14.sp,
@@ -107,7 +111,7 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                                 color = Color.DarkGray,
                                 style = TextStyle(fontWeight = FontWeight.Medium)
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
+                            // 작성일 맨 하단 표시
                             Text(
                                 text = "작성일 : 2024.07.27",
                                 fontSize = 12.sp,
@@ -128,17 +132,17 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                         .align(Alignment.CenterHorizontally)
                         .padding(8.dp),
                     activeColor = Color.DarkGray,
-                    inactiveColor = Color.LightGray
+                    inactiveColor = Color.White
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 // 메모하기 버튼
                 Button(
-                    onClick = { /* 메모하기 기능 추가 */ },
+                    onClick = { /* 메모 기능 추가 해야 됨 */ },
                     modifier = Modifier
-                        .width(120.dp)
-                        .height(45.dp)
+                        .width(110.dp)
+                        .height(40.dp)
                         .clip(RoundedCornerShape(15.dp)),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFF2D3)
