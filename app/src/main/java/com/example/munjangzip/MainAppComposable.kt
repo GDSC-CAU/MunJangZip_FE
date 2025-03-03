@@ -12,6 +12,9 @@ import com.example.munjangzip.feature.booklist.BookListScreen
 import com.example.munjangzip.feature.category.CategoryScreen
 import com.example.munjangzip.feature.savebook.TakePhotoPage
 import com.example.munjangzip.feature.addCategory.AddCategoryScreen
+import com.example.munjangzip.feature.booklist.BookListGrid
+import com.example.munjangzip.feature.memo.ViewMemoScreen
+import com.example.munjangzip.feature.books.BookDetailScreen
 
 
 @Composable
@@ -43,6 +46,17 @@ fun MainApp() {
             // 카테고리 추가 네비게이션
             composable(route = "addcategory") {
                 AddCategoryScreen(navController = navController)
+            }
+
+            // 책 상세 페이지 네비게이션
+            composable(route = "bookDetail/{bookId}") { backStackEntry ->
+                val bookId = backStackEntry.arguments?.getString("bookId")?.toIntOrNull() ?: 0
+                BookDetailScreen(navController = navController, bookId = bookId)
+            }
+
+            // 메모 보기 페이지 네비게이션
+            composable(route = "viewMemo") {
+                ViewMemoScreen(navController = navController)
             }
         }
 
