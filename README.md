@@ -17,7 +17,7 @@ Color.kt
 
 ## appbar 패키지
 TopBarWidget.kt   
-
+이런 구조의 탑바는 fun TopBarWidget() 실행   
 
 ![image](https://github.com/user-attachments/assets/3fd8d938-c626-4af1-a244-dc09730434e5)
 
