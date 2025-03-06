@@ -37,7 +37,7 @@ fun AddCategoryScreen(navController: NavController) {
         }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            BackGroundBubble()
+            BackGroundBubble(R.drawable.bubble)
             Column(
                 modifier = Modifier
                     .fillMaxSize()
