@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -47,18 +48,41 @@ fun NoBookInfoScreen(navController: NavController) {
             ) {
                 Spacer(modifier = Modifier.padding(8.dp))
 
-                Card(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(width = 250. dp, height = 420.dp)
-                ) {
-                    Image(
-                        modifier = Modifier.fillMaxSize(),
-                        painter = painterResource(R.drawable.nobook),
-                        contentDescription = "Loaded Book",
-                        contentScale = ContentScale.Crop,
-                    )
-                }
+                    Card(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(width = 250. dp, height = 420.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ){
+                            Image(
+                                modifier = Modifier.fillMaxSize(),
+                                painter = painterResource(R.drawable.nobook),
+                                contentDescription = "Loaded Book",
+                                contentScale = ContentScale.Crop,
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(top = 120.dp, start = 20.dp, end = 20.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = "도서관에 책이\n없나봐요!!",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White,
+                                    textAlign = TextAlign.Center
+
+                                )
+                            }
+                        }
+
+                    }
+
+
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 ElevatedButton(

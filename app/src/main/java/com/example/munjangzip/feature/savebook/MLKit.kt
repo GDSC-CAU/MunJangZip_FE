@@ -17,7 +17,7 @@ fun Activity.startMLKitScanner() {
 
     val scanner = GmsBarcodeScanning.getClient(this)
 
-    var ISBNnumber = null
+    var isbnNumber:String
 // Or with a configured options
 // val scanner = GmsBarcodeScanning.getClient(this, options)
 
@@ -28,7 +28,9 @@ fun Activity.startMLKitScanner() {
             rawValue?.let {
                 // 바코드 값 처리
                 //println("Scanned barcode: $it")
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show() //바코드값 테스트 용으로 메시지창
+                isbnNumber = it
+                Toast.makeText(this, isbnNumber, Toast.LENGTH_SHORT).show() //바코드값 테스트 용으로 메시지창
+
             }
         }
         .addOnCanceledListener {

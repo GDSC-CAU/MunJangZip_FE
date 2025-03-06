@@ -47,7 +47,7 @@ import com.example.munjangzip.ui.theme.Ivory
 fun TakePhotoPage(navController: NavController) {
     val context = LocalContext.current
 
-    var isSuccess = false //isbn 넘버로 데이터를 불러오기 성공여부
+    var isSuccess = true //isbn 넘버로 데이터를 불러오기 성공여부
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
