@@ -14,6 +14,8 @@ import com.example.munjangzip.feature.savebook.TakePhotoPage
 import com.example.munjangzip.feature.addCategory.AddCategoryScreen
 import com.example.munjangzip.feature.booklist.BookListGrid
 import com.example.munjangzip.feature.books.BookDetailScreen
+import com.example.munjangzip.feature.loadBookInfo.LoadBookInfoScreen
+import com.example.munjangzip.feature.loadBookInfo.NoBookInfoScreen
 
 
 @Composable
@@ -51,6 +53,16 @@ fun MainApp() {
             composable(route = "bookDetail/{bookId}") { backStackEntry ->
                 val bookId = backStackEntry.arguments?.getString("bookId")?.toIntOrNull() ?: 0
                 BookDetailScreen(navController = navController, bookId = bookId)
+            }
+
+            //바코드로 찍은 책을 불러와서 등록하는 페이지 네비게이션
+            composable(route = "bookInfo") {
+                LoadBookInfoScreen(navController = navController)
+            }
+
+            //바코드로 인식한 책의 정보를 불러올 수 없을 때 네비게이션
+            composable(route = "noBookInfo") {
+                NoBookInfoScreen(navController = navController)
             }
 
         }

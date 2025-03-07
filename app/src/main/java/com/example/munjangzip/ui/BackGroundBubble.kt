@@ -12,7 +12,9 @@ import androidx.compose.ui.unit.dp
 import com.example.munjangzip.R
 
 @Composable
-fun BackGroundBubble(modifier: Modifier = Modifier) {
+fun BackGroundBubble(drawing: Int) { //말품선으로 입력하고 싶은 이미지 인수로 전달
+
+    //var drawing = R.drawable.bubble
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -36,7 +38,7 @@ fun BackGroundBubble(modifier: Modifier = Modifier) {
             ) {
                 // 말풍선 (고양이 뒤쪽에 배치)
                 Image(
-                    painter = painterResource(R.drawable.bubble),
+                    painter = painterResource(drawing), //
                     contentDescription = "말풍선",
                     modifier = Modifier
                         .size(250.dp)

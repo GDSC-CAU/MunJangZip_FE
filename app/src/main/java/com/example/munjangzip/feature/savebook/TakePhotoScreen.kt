@@ -1,5 +1,6 @@
 package com.example.munjangzip.feature.savebook
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -43,6 +45,9 @@ import com.example.munjangzip.ui.theme.Ivory
 
 @Composable
 fun TakePhotoPage(navController: NavController) {
+    val context = LocalContext.current
+
+    var isSuccess = true //isbn 넘버로 데이터를 불러오기 성공여부
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -111,7 +116,15 @@ fun TakePhotoPage(navController: NavController) {
 
             Spacer(modifier = Modifier.padding(8.dp))
             ElevatedButton(
-                onClick = {},
+                onClick = { (context as? Activity)?.startMLKitScanner(); //바코드 인식 실행
+                    if (isSuccess) { //바코드로 책 정보 불러오기 성공하면
+                        navController.navigate("bookInfo")
+                    }
+                    else { //실패했을 경우
+                        navController.navigate("noBookInfo")
+                    }
+
+                  },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Gray10

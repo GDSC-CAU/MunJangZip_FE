@@ -33,6 +33,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -72,6 +73,11 @@ dependencies {
 
 
     implementation("androidx.activity:activity-compose:1.8.2")
+
+    //바코드 스캔을 위한 ML KIT
+    implementation (libs.barcode.scanning)
+
+    implementation (libs.play.services.code.scanner)
 
 }
 
