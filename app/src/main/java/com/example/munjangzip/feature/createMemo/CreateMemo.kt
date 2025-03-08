@@ -22,6 +22,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGroundBubble
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.interaction.MutableInteractionSource
+
+
 
 val LightYellow = Color(0xFFFFF2D3)
 
@@ -93,13 +97,22 @@ fun CreateMemo(navController: NavController) {
                     Image(
                         painter = painterResource(memoBackground),
                         contentDescription = null,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(30.dp))
                     )
                     // 메모 입력
                     TextField(
                         value = memoText,
                         onValueChange = { memoText = it },
-                        placeholder = { Text("눌러서 입력하기", color = Color.Gray) },
+                        placeholder = {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center  // placeholder를 가운데 정렬
+                            ) {
+                                Text("눌러서 입력하기", color = Color.Gray)
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp)  // 내부 패딩
@@ -141,7 +154,11 @@ fun CreateMemo(navController: NavController) {
                                 .size(70.dp)
                                 .padding(10.dp)
                                 .background(color, CircleShape)
-                                .clickable { selectedColor = color }
+                                .clickable(
+                                    onClick = { selectedColor = color },
+                                    indication = null,  // 잔상 제거
+                                    interactionSource = remember { MutableInteractionSource() }  // 잔상 제거
+                                )
                                 .border(
                                     width = if (selectedColor == color) 3.dp else 0.dp,
                                     color = if (selectedColor == color) Color.Gray else Color.Transparent,
@@ -157,7 +174,7 @@ fun CreateMemo(navController: NavController) {
                 Button(
                     onClick = { /* 저장 기능 추가하기 */ },
                     modifier = Modifier
-                        .width(140.dp)
+                        .width(130.dp)
                         .height(50.dp)
                         .shadow(elevation = 8.dp, shape = RoundedCornerShape(20.dp)),
                     shape = RoundedCornerShape(20.dp),
@@ -167,7 +184,7 @@ fun CreateMemo(navController: NavController) {
                 ) {
                     Text(
                         text = "저장하기",
-                        fontSize = 18.sp,
+                        fontSize = 15.sp,
                         color = Color.Gray
                     )
                 }
