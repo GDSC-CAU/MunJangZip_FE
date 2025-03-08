@@ -17,6 +17,7 @@ import com.example.munjangzip.feature.booklist.BookListGrid
 import com.example.munjangzip.feature.books.BookDetailScreen
 import com.example.munjangzip.feature.loadBookInfo.LoadBookInfoScreen
 import com.example.munjangzip.feature.loadBookInfo.NoBookInfoScreen
+import com.example.munjangzip.feature.memo.CreateMemo
 
 
 @Composable
@@ -64,6 +65,12 @@ fun MainApp() {
             //바코드로 인식한 책의 정보를 불러올 수 없을 때 네비게이션
             composable(route = "noBookInfo") {
                 NoBookInfoScreen(navController = navController)
+            }
+
+
+            //메모 생성 페이지 네비게이
+            composable(route = "createMemo") {
+                CreateMemo(navController = navController)
             }
 
         }
