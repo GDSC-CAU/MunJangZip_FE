@@ -124,8 +124,9 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
 
                             Column(
                                 modifier = Modifier
-                                    .padding(16.dp)
+                                    .padding(20.dp)
                                     .fillMaxSize(),
+
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.SpaceBetween
                             ) {
@@ -163,7 +164,7 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
 
                 // 메모하기 버튼
                 Button(
-                    onClick = { /* 메모 기능 추가 해야 됨 */ },
+                    onClick = { navController.navigate("createMemo")}, //메모 생성페이지로 이동
                     modifier = Modifier
                         .width(110.dp)
                         .height(40.dp)
