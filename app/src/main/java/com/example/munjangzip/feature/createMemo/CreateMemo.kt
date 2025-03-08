@@ -23,9 +23,6 @@ import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGroundBubble
 import androidx.compose.ui.draw.clip
-import androidx.compose.foundation.interaction.MutableInteractionSource
-
-
 
 val LightYellow = Color(0xFFFFF2D3)
 
@@ -59,13 +56,7 @@ fun CreateMemo(navController: NavController) {
                 Spacer(modifier = Modifier.padding(15.dp))
                 Box(contentAlignment = Alignment.Center) {
                     // 붕어빵 아이콘
-                    Image(
-                        painter = painterResource(R.drawable.fish),
-                        contentDescription = "붕어빵 아이콘",
-                        modifier = Modifier
-                            .offset(y = (-40).dp)
-                            .size(100.dp)
-                    )
+
                     // "바로 글쓰기" 부분
                     Surface(
                         shape = RoundedCornerShape(20.dp),
@@ -82,6 +73,13 @@ fun CreateMemo(navController: NavController) {
                             modifier = Modifier.padding(vertical = 15.dp, horizontal = 40.dp)
                         )
                     }
+                    Image(
+                        painter = painterResource(R.drawable.fish),
+                        contentDescription = "붕어빵 아이콘",
+                        modifier = Modifier
+                            .offset(x = (-90).dp)
+                            .size(100.dp)
+                    )
                 }
 
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -154,11 +152,7 @@ fun CreateMemo(navController: NavController) {
                                 .size(70.dp)
                                 .padding(10.dp)
                                 .background(color, CircleShape)
-                                .clickable(
-                                    onClick = { selectedColor = color },
-                                    indication = null,  // 잔상 제거
-                                    interactionSource = remember { MutableInteractionSource() }  // 잔상 제거
-                                )
+                                .clickable { selectedColor = color }
                                 .border(
                                     width = if (selectedColor == color) 3.dp else 0.dp,
                                     color = if (selectedColor == color) Color.Gray else Color.Transparent,
