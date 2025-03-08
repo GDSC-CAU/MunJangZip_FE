@@ -4,47 +4,40 @@
 package com.example.munjangzip.feature.books
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
-import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.appbar.TopBarWidget
-import androidx.compose.foundation.layout.*
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import com.google.accompanist.pager.*
 import androidx.compose.ui.graphics.graphicsLayer
 import kotlin.math.absoluteValue
 import androidx.compose.ui.util.lerp
-import com.example.munjangzip.ui.theme.BrightYellow
-
+import androidx.compose.ui.layout.ContentScale
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun BookDetailScreen(navController: NavController, bookId: Int) {
     val pagerState = rememberPagerState()
-    val memos = listOf(
-        "메모1: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ",
-        "메모2: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ",
-        "메모3: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ"
+
+    // 백엔드에서 받아온 데이터 예시
+    val paragraphs = listOf(
+        mapOf("content" to "메모1: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ", "imageUrl" to "url1", "color" to 1, "createdAt" to "2024-07-27"),
+        mapOf("content" to "메모2: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ", "imageUrl" to "url2", "color" to 2, "createdAt" to "2024-07-28"),
+        mapOf("content" to "메모3: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ", "imageUrl" to "url3", "color" to 3, "createdAt" to "2024-07-29")
     )
 
     Scaffold(
@@ -82,16 +75,24 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
 
                 // 스와이프로 메모 보기
                 HorizontalPager(
-                    count = memos.size,
+                    count = paragraphs.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(220.dp)
                         .padding(horizontal = 16.dp)
                 ) { page ->
+                    val paragraph = paragraphs[page]
+                    val bgColor = when (paragraph["color"]) {
+                        1 -> R.drawable.memo_background1 //노란색
+                        2 -> R.drawable.memo_background2 //분홍색
+                        3 -> R.drawable.memo_background3 //회색
+                        4 -> R.drawable.memo_background4 //하늘색
+                        5 -> R.drawable.memo_background5 //연두색
+                        else -> R.drawable.memo_default_background
+                    }
                     Surface(
                         shape = RoundedCornerShape(20.dp),
-                        color = Color.White, //색상도 백에서 받아오기
                         shadowElevation = 8.dp,
                         modifier = Modifier
                             .fillMaxWidth(0.9f)
@@ -99,7 +100,7 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                             .graphicsLayer {
                                 val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
 
-                                //스와이프 시 회전&이동
+                                // 스와이프 시 회전 & 이동 효과
                                 translationX = -pageOffset * 300f
                                 rotationY = pageOffset * 15f
                                 alpha = lerp(
@@ -110,32 +111,45 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                             }
                             .clip(RoundedCornerShape(20.dp))
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.SpaceBetween
+                        Box(
+                            modifier = Modifier.fillMaxSize()
                         ) {
-                            // 메모 내용
-                            Text(
-                                text = memos[page],
-                                fontSize = 14.sp,
-                                textAlign = TextAlign.Center,
-                                color = Color.DarkGray,
-                                style = TextStyle(fontWeight = FontWeight.Medium)
+                            // 메모 색상 배경
+                            Image(
+                                painter = painterResource(id = bgColor),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop, //크기 조정
+                                modifier = Modifier.fillMaxSize()
                             )
-                            // 작성일 (하단에 고정)
-                            Text(
-                                text = "작성일 : 2024.07.27",
-                                fontSize = 12.sp,
-                                color = Color.Gray,
-                                textAlign = TextAlign.End,
-                                modifier = Modifier.fillMaxWidth()
-                            )
+
+                            Column(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxSize(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                // 메모 내용
+                                Text(
+                                    text = paragraph["content"] as String,
+                                    fontSize = 14.sp,
+                                    textAlign = TextAlign.Center,
+                                    color = Color.DarkGray,
+                                    style = TextStyle(fontWeight = FontWeight.Medium)
+                                )
+                                // 작성일 (하단에 고정)
+                                Text(
+                                    text = "작성일 : ${paragraph["createdAt"]}",
+                                    fontSize = 12.sp,
+                                    color = Color.Gray,
+                                    textAlign = TextAlign.End,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
                         }
                     }
                 }
+
                 // 페이지 인디케이터
                 HorizontalPagerIndicator(
                     pagerState = pagerState,
