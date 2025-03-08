@@ -16,7 +16,8 @@ import com.example.munjangzip.feature.booklist.BookListGrid
 import com.example.munjangzip.feature.books.BookDetailScreen
 import com.example.munjangzip.feature.loadBookInfo.LoadBookInfoScreen
 import com.example.munjangzip.feature.loadBookInfo.NoBookInfoScreen
-import com.example.munjangzip.feature.memo.CreateMemo
+import com.example.munjangzip.feature.createMemo.CreateMemo
+import com.example.munjangzip.feature.selectMemo.SelectMemo
 
 
 @Composable
@@ -67,10 +68,15 @@ fun MainApp() {
             }
 
 
-            //메모 생성 페이지 네비게이
+            //메모 생성 페이지 네비게이션
             composable(route = "createMemo") {
                 CreateMemo(navController = navController)
             }
+            //메모 생성 선택 페이지 네비게이션
+            composable(route = "selectMemo") {
+                SelectMemo(navController = navController)
+            }
+
 
         }
 
