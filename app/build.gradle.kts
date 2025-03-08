@@ -68,11 +68,13 @@ dependencies {
     //hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
     implementation ("com.google.accompanist:accompanist-pager:0.30.0")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.0")
 
 
-    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.activity:activity-compose:1.10.1")
 
     //바코드 스캔을 위한 ML KIT
     implementation (libs.barcode.scanning)
