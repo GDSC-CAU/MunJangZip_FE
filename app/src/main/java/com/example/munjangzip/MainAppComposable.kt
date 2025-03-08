@@ -7,11 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.munjangzip.feature.auth.signin.SignInScreen
 import com.example.munjangzip.feature.booklist.BookListScreen
 import com.example.munjangzip.feature.category.CategoryScreen
 import com.example.munjangzip.feature.savebook.TakePhotoPage
 import com.example.munjangzip.feature.addCategory.AddCategoryScreen
+import com.example.munjangzip.feature.auth.signin.SignInScreen
+import com.example.munjangzip.feature.auth.signup.SignUpScreen
 import com.example.munjangzip.feature.booklist.BookListGrid
 import com.example.munjangzip.feature.books.BookDetailScreen
 import com.example.munjangzip.feature.loadBookInfo.LoadBookInfoScreen
@@ -23,14 +24,14 @@ fun MainApp() {
     Surface(modifier = Modifier.fillMaxSize()) {
         val navController = rememberNavController()
 
-        NavHost(navController = navController, startDestination = "category") {
+        NavHost(navController = navController, startDestination = "register") {
 
             composable(route = "login") {
                 SignInScreen(navController = navController)
             }
 
             composable(route = "register") {
-
+                SignUpScreen(navController = navController)
             }
             composable(route = "category") {
                 CategoryScreen(navController = navController)
