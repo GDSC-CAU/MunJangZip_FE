@@ -164,7 +164,7 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
 
                 // 메모하기 버튼
                 Button(
-                    onClick = { navController.navigate("createMemo")}, //메모 생성페이지로 이동
+                    onClick = { navController.navigate("selectMemo")}, //메모 선택페이지 이동
                     modifier = Modifier
                         .width(110.dp)
                         .height(40.dp)
