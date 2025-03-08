@@ -1,4 +1,5 @@
 package com.example.munjangzip.feature.createMemo
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,42 +19,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.munjangzip.R
-import com.example.munjangzip.appbar.TopBarWidget  // 🔥 TopBarWidget 임포트
+import com.example.munjangzip.appbar.TopBarWidget
+import com.example.munjangzip.ui.BackGroundBubble
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateMemoPic(navController: NavController) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {  // 🔥 TopBar 추가
+        topBar = {
             TopBarWidget(navController = navController)
         }
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
+            BackGroundBubble(R.drawable.bubble4)
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.padding(20.dp))
-
-                Text(
-                    text = "사진 추가하기",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Gray,
-                    modifier = Modifier.padding(20.dp)
-                )
-
-                Spacer(modifier = Modifier.padding(10.dp))
-
+                Spacer(modifier = Modifier.padding(50.dp))
+                // 사진 선택하기 버튼
                 Button(
-                    onClick = { /* 사진 추가 기능 */ },
+                    onClick = { /* 사진 선택로직 ㄱ */ },
                     modifier = Modifier
                         .width(200.dp)
-                        .height(50.dp)
-                        .shadow(8.dp, shape = RoundedCornerShape(20.dp)),
+                        .height(60.dp)
+                        .shadow(8.dp, shape = RoundedCornerShape(30.dp)),
                     shape = RoundedCornerShape(20.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFE5EFFD)
@@ -61,12 +54,34 @@ fun CreateMemoPic(navController: NavController) {
                 ) {
                     Text(
                         text = "사진 선택",
-                        fontSize = 15.sp,
-                        color = Color.Gray
+                        fontSize = 20.sp,
+                        color = Color.Gray,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
 
                 Spacer(modifier = Modifier.padding(20.dp))
+
+                //사진 찍기 버튼
+                Button(
+                    onClick = { /* 사진 찍기 로직 ㄱ */ },
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(60.dp)
+                        .shadow(8.dp, shape = RoundedCornerShape(30.dp)),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFF2D3)
+                    )
+                ) {
+                    Text(
+                        text = "사진 찍기",
+                        fontSize = 20.sp,
+                        color = Color.Gray,
+                        fontWeight = FontWeight.SemiBold
+
+                    )
+                }
             }
         }
     }
