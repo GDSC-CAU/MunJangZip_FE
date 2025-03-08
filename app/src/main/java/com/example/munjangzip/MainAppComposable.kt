@@ -19,7 +19,7 @@ import com.example.munjangzip.feature.loadBookInfo.LoadBookInfoScreen
 import com.example.munjangzip.feature.loadBookInfo.NoBookInfoScreen
 import com.example.munjangzip.feature.createMemo.CreateMemo
 import com.example.munjangzip.feature.selectMemo.SelectMemo
-
+import com.example.munjangzip.feature.createMemo.CreateMemoPic
 
 @Composable
 fun MainApp() {
@@ -76,6 +76,9 @@ fun MainApp() {
             //메모 생성 선택 페이지 네비게이션
             composable(route = "selectMemo") {
                 SelectMemo(navController = navController)
+            }
+            composable("createMemoPic") {
+                CreateMemoPic(navController = navController)
             }
 
 
