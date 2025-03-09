@@ -35,9 +35,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.appbar.SignUpInputWidget
+import com.example.munjangzip.appbar.TopBarWidget
 import com.example.munjangzip.feature.createMemo.LightYellow
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.ui.BackGroundBubble
+import com.example.munjangzip.ui.SimpleBackGround
 import com.example.munjangzip.ui.theme.GrayishBlue
 import com.example.munjangzip.ui.theme.PaleRed
 
@@ -78,8 +80,13 @@ fun SignUpScreen(navController: NavController) {
         }
     }
 
-    Scaffold (modifier = Modifier.fillMaxSize()) {
-        BackGround()
+    Scaffold (
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopBarWidget(navController)
+        }
+    ) {
+        SimpleBackGround()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -91,7 +98,7 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.padding(8.dp))
             Image(
                 painter = painterResource(R.drawable.apptitle),
-                contentDescription = "고양이",
+                contentDescription = "문장집",
                 //modifier = Modifier.size(300.dp)
             )
             SignUpInputWidget(

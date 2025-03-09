@@ -15,6 +15,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -37,7 +38,9 @@ fun SignUpInputWidget(textLabel: String, textInputValue: String, onTextChange: (
                 .padding(4.dp)
                 .height(55.dp)
                 .width(240.dp)
-                //.shadow(4.dp)
+                .shadow(8.dp, shape = RoundedCornerShape(30.dp))
+
+            //.shadow(4.dp)
                 //.zIndex(0f)
             ,
             shape = RoundedCornerShape(20.dp),

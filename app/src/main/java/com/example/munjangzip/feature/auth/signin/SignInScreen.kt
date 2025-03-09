@@ -1,8 +1,10 @@
 package com.example.munjangzip.feature.auth.signin
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,11 +23,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.munjangzip.R
+import com.example.munjangzip.appbar.SignUpInputWidget
+import com.example.munjangzip.appbar.TopBarWidget
+import com.example.munjangzip.feature.createMemo.LightYellow
+import com.example.munjangzip.ui.SimpleBackGround
+import com.example.munjangzip.ui.theme.GrayishBlue
+import com.example.munjangzip.ui.theme.PaleRed
 
 @Composable
 fun SignInScreen(navController: NavController) {
@@ -55,39 +66,43 @@ fun SignInScreen(navController: NavController) {
         }
     }
 
-    Scaffold(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-            .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
+    Scaffold (
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopBarWidget(navController)
+        }
+    ) {
+        SimpleBackGround()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-            OutlinedTextField(
-                value = email,
-                onValueChange = {email = it},
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "Email") }) //이메일
-            OutlinedTextField(value = password,
-                onValueChange = {password = it},
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "Password") },//비밀번호
-                visualTransformation = PasswordVisualTransformation() //비밀번호 * 로 표시
+            Spacer(modifier = Modifier.padding(8.dp))
+            Image(
+                painter = painterResource(R.drawable.apptitle),
+                contentDescription = "문장집",
+                //modifier = Modifier.size(300.dp)
+            )
+            SignUpInputWidget(
+                textLabel = "이메일을 입력해주세요",
+                textInputValue = email,
+                onTextChange = { email = it},
+                textFieldColor = LightYellow,
+                fishImage = R.drawable.yellofish
             )
 
-            if(uiState.value == SignInState.Loading) {
-                CircularProgressIndicator()
-            } else {
-                Button(
-                    onClick = { viewModel.signIn(email, password)},
-                    modifier = Modifier.fillMaxWidth()) {
-                    Text(text = "Sign In")
-                }
-                TextButton(onClick = { navController.navigate("signup") }) { //signup 화면으로 이동
-                    Text(text = "Don't have an account? Sign up!")
-                }
-            }
+
+            SignUpInputWidget(
+                textLabel = "비밀번호를 입력해주세요",
+                textInputValue = password,
+                onTextChange = { password = it},
+                textFieldColor = Color.White,
+                fishImage = R.drawable.fish_gray
+            )
 
         }
     }
