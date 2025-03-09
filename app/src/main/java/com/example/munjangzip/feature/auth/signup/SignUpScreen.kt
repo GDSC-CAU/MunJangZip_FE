@@ -1,6 +1,7 @@
 package com.example.munjangzip.feature.auth.signup
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,28 +24,38 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munjangzip.R
+import com.example.munjangzip.appbar.SignUpInputWidget
+import com.example.munjangzip.feature.createMemo.LightYellow
+import com.example.munjangzip.ui.BackGround
+import com.example.munjangzip.ui.BackGroundBubble
 
 @Composable
 fun SignUpScreen(navController: NavController) {
     val viewModel: SignUpViewModel = hiltViewModel()
     val uiState = viewModel.state.collectAsState()
 
-    var nickname by remember {
-        mutableStateOf("")
-    }
+
     var email by remember {
         mutableStateOf("")
     }
+    var nickname by remember {
+        mutableStateOf("")
+    }
+
     var password by remember {
         mutableStateOf("")
     }
-    var confirm by remember {
+    var libraryName by remember {
         mutableStateOf("")
     }
 
@@ -66,65 +77,50 @@ fun SignUpScreen(navController: NavController) {
     }
 
     Scaffold (modifier = Modifier.fillMaxSize()) {
+        BackGround()
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
+                .padding(it),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-
-            Spacer(modifier = Modifier.size(32.dp))
-            OutlinedTextField(
-                value = nickname,
-                onValueChange = { nickname = it},
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "nickname") }
+            Spacer(modifier = Modifier.padding(8.dp))
+            Image(
+                painter = painterResource(R.drawable.apptitle),
+                contentDescription = "고양이",
+                //modifier = Modifier.size(300.dp)
             )
-            Spacer(modifier = Modifier.size(8.dp))
-            OutlinedTextField(
-                value = email,
-                onValueChange = { email = it},
-                modifier = Modifier.fillMaxWidth(), //가로로 길게
-                label = { Text(text = "Email") }
-            ) //이메일
-            Spacer(modifier = Modifier.size(8.dp))
-            OutlinedTextField(
-                value = password,
-                onValueChange = {password = it},
-                modifier = Modifier.fillMaxWidth(), //가로로 길게
-                label = { Text(text = "Password") },
-                visualTransformation = PasswordVisualTransformation()
-            ) //비밀번호
-
-            Spacer(modifier = Modifier.size(8.dp))
-            OutlinedTextField(
-                value = confirm,
-                onValueChange = { confirm = it},
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "Confirm Password") },
-                visualTransformation = PasswordVisualTransformation(),
-                isError = password.isNotEmpty() && confirm.isNotEmpty() && confirm != password
+            SignUpInputWidget(
+                textLabel = "이메일을 입력해주세요",
+                textInputValue = email,
+                onTextChange = { email = it},
+                textFieldColor = LightYellow,
+                fishImage = R.drawable.yellofish
             )
-            Spacer(modifier = Modifier.size(8.dp))
+            SignUpInputWidget(
+                textLabel = "닉네임을 입력해주세요",
+                textInputValue = nickname,
+                onTextChange = { nickname = it},
+                textFieldColor = Color.Blue, //색상변경 필요
+                fishImage = R.drawable.fish_blue
+            )
 
-            if(uiState.value == SignUpState.Loading) {
-                CircularProgressIndicator()
-            } else {
-                Button(
-                    onClick = { viewModel.signUp(nickname, email, password)},
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = nickname.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirm.isNotEmpty() && password == confirm
-
-                ) {
-                    Text(text = "signup")
-                }
-                TextButton(onClick = { }) {
-                    Text(text = "Already have an account? Sign in!")
-                }
-            }
+            SignUpInputWidget(
+                textLabel = "비밀번호를 입력해주세요",
+                textInputValue = password,
+                onTextChange = { password = it},
+                textFieldColor = Color.White,
+                fishImage = R.drawable.fish_gray
+            )
+            SignUpInputWidget(
+                textLabel = "당신의 도서관 이름은?",
+                textInputValue = libraryName,
+                onTextChange = { libraryName = it},
+                textFieldColor = LightYellow,//색상변경 필요
+                fishImage = R.drawable.yellofish //fish 이미지 지정필요
+            )
         }
     }
 }
