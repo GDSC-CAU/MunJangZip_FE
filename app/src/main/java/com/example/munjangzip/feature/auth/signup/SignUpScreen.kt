@@ -38,6 +38,8 @@ import com.example.munjangzip.appbar.SignUpInputWidget
 import com.example.munjangzip.feature.createMemo.LightYellow
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.ui.BackGroundBubble
+import com.example.munjangzip.ui.theme.GrayishBlue
+import com.example.munjangzip.ui.theme.PaleRed
 
 @Composable
 fun SignUpScreen(navController: NavController) {
@@ -103,7 +105,7 @@ fun SignUpScreen(navController: NavController) {
                 textLabel = "닉네임을 입력해주세요",
                 textInputValue = nickname,
                 onTextChange = { nickname = it},
-                textFieldColor = Color.Blue, //색상변경 필요
+                textFieldColor = GrayishBlue,
                 fishImage = R.drawable.fish_blue
             )
 
@@ -118,9 +120,10 @@ fun SignUpScreen(navController: NavController) {
                 textLabel = "당신의 도서관 이름은?",
                 textInputValue = libraryName,
                 onTextChange = { libraryName = it},
-                textFieldColor = LightYellow,//색상변경 필요
+                textFieldColor = PaleRed,//색상변경 필요
                 fishImage = R.drawable.yellofish //fish 이미지 지정필요
             )
+
         }
     }
 }
