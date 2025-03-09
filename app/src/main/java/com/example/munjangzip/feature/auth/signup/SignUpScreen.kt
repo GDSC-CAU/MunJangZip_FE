@@ -38,6 +38,7 @@ import com.example.munjangzip.appbar.SignUpInputWidget
 import com.example.munjangzip.feature.createMemo.LightYellow
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.ui.BackGroundBubble
+import com.example.munjangzip.ui.SimpleBackGround
 import com.example.munjangzip.ui.theme.GrayishBlue
 import com.example.munjangzip.ui.theme.PaleRed
 
@@ -79,7 +80,7 @@ fun SignUpScreen(navController: NavController) {
     }
 
     Scaffold (modifier = Modifier.fillMaxSize()) {
-        BackGround()
+        SimpleBackGround()
         Column(
             modifier = Modifier
                 .fillMaxSize()

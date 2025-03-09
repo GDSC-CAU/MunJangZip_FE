@@ -11,6 +11,7 @@ import com.example.munjangzip.feature.booklist.BookListScreen
 import com.example.munjangzip.feature.category.CategoryScreen
 import com.example.munjangzip.feature.savebook.TakePhotoPage
 import com.example.munjangzip.feature.addCategory.AddCategoryScreen
+import com.example.munjangzip.feature.auth.StartScreen
 import com.example.munjangzip.feature.auth.signin.SignInScreen
 import com.example.munjangzip.feature.auth.signup.SignUpScreen
 import com.example.munjangzip.feature.booklist.BookListGrid
@@ -26,15 +27,24 @@ fun MainApp() {
     Surface(modifier = Modifier.fillMaxSize()) {
         val navController = rememberNavController()
 
-        NavHost(navController = navController, startDestination = "register") {
+        NavHost(navController = navController, startDestination = "start") {
 
+            //로그인 할지 회원가입할지 선택하는 화면
+            composable(route = "start") {
+                StartScreen(navController = navController)
+            }
+
+            //로그인
             composable(route = "login") {
                 SignInScreen(navController = navController)
             }
 
+            //회원가입
             composable(route = "register") {
                 SignUpScreen(navController = navController)
             }
+
+            //카테고리 페이지 (카테고리 목록들이 뜨는 페이지)
             composable(route = "category") {
                 CategoryScreen(navController = navController)
             }
