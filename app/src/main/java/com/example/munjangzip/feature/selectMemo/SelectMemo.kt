@@ -63,8 +63,8 @@ fun SelectMemo(navController: NavController) {
                 MemoButton(
                     text = "사진 추가하기",
                     color = Color(0xFFE5EFFD),
-                    fishIcon = R.drawable.fish,
-                    onClick = { /* 사진 추가하는 부분으로 이동*/ }
+                    fishIcon = R.drawable.fish_blue,
+                    onClick = { navController.navigate("createMemoPic") }
                 )
 
                 Spacer(modifier = Modifier.padding(25.dp))
@@ -73,7 +73,7 @@ fun SelectMemo(navController: NavController) {
                 MemoButton(
                     text = "업데이트 예정!",
                     color = Color(0xFFF5F5F5),
-                    fishIcon = R.drawable.fish,
+                    fishIcon = R.drawable.fish_gray,
                     dashed = true,
                     onClick = { }
                 )

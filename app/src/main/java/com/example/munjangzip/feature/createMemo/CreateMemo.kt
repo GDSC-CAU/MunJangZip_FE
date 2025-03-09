@@ -23,12 +23,14 @@ import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGroundBubble
 import androidx.compose.ui.draw.clip
+import com.example.munjangzip.appbar.TopBarWidget
 
 val LightYellow = Color(0xFFFFF2D3)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateMemo(navController: NavController) {
+
     var selectedColor by remember { mutableStateOf(Color(0xFFFFF2D3)) }  // base 색상
     var memoText by remember { mutableStateOf("") }
 
@@ -43,7 +45,11 @@ fun CreateMemo(navController: NavController) {
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+                topBar = {
+            TopBarWidget(navController = navController)
+        }
+
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             BackGroundBubble(R.drawable.bubble2)
@@ -53,7 +59,7 @@ fun CreateMemo(navController: NavController) {
                     .padding(it),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.padding(15.dp))
+
                 Box(contentAlignment = Alignment.Center) {
                     // 붕어빵 아이콘
 
