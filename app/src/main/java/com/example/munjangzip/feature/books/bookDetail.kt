@@ -1,8 +1,8 @@
 /*###################
 #### 책 상세 페이지 ####
 ###################*/
-package com.example.munjangzip.feature.books
 
+package com.example.munjangzip.feature.books
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import kotlin.math.absoluteValue
 import androidx.compose.ui.util.lerp
 import androidx.compose.ui.layout.ContentScale
+import coil.compose.rememberAsyncImagePainter
+
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -35,9 +37,8 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
 
     // 백엔드에서 받아온 데이터 예시
     val paragraphs = listOf(
-        mapOf("content" to "메모1: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ", "imageUrl" to "url1", "color" to 1, "createdAt" to "2024-07-27"),
-        mapOf("content" to "메모2: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ", "imageUrl" to "url2", "color" to 2, "createdAt" to "2024-07-28"),
-        mapOf("content" to "메모3: 가나다라마바사아자차카아아아낭러ㅕ아려ㅗㅑ몽래ㅑㅗ앨ㅈ달이라으ㅓ라ㅣㅣㄴ어ㅜ러ㅣㅈ", "imageUrl" to "url3", "color" to 3, "createdAt" to "2024-07-29")
+        mapOf("content" to "직접 작성 예시", "ImageUrl" to null, "color" to 1, "createAt" to "2024-07-27"),
+        mapOf("content" to null, "ImageUrl" to "https://example.com/image1.jpg", "color" to 2, "createAt" to "2024-07-28"),
     )
 
     Scaffold(
@@ -55,7 +56,7 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // 책 정보 - 임시로 표시
+                // 책 정보 임시 표시
                 Text(text = "소년이 온다", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.DarkGray)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "작가: 한강", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = Color.DarkGray)
@@ -73,34 +74,35 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                // 스와이프로 메모 보기
+                //스와이프로 메모 보기
                 HorizontalPager(
                     count = paragraphs.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(220.dp)
+                        .height(250.dp)
                         .padding(horizontal = 16.dp)
                 ) { page ->
                     val paragraph = paragraphs[page]
+                    val content = paragraph["content"] as String?
+                    val imageUrl = paragraph["ImageUrl"] as String?
                     val bgColor = when (paragraph["color"]) {
-                        1 -> R.drawable.memo_background1 //노란색
-                        2 -> R.drawable.memo_background2 //분홍색
-                        3 -> R.drawable.memo_background3 //회색
-                        4 -> R.drawable.memo_background4 //하늘색
-                        5 -> R.drawable.memo_background5 //연두색
+                        1 -> R.drawable.memo_background1 // 노란색
+                        2 -> R.drawable.memo_background3 // 회색
+                        3 -> R.drawable.memo_background2 // 분홍색
+                        4 -> R.drawable.memo_background4 // 하늘색
+                        5 -> R.drawable.memo_background5 // 연두색
                         else -> R.drawable.memo_default_background
                     }
+
                     Surface(
                         shape = RoundedCornerShape(20.dp),
                         shadowElevation = 8.dp,
                         modifier = Modifier
                             .fillMaxWidth(0.9f)
-                            .height(180.dp)
+                            .height(200.dp)
                             .graphicsLayer {
                                 val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
-
-                                // 스와이프 시 회전 & 이동 효과
                                 translationX = -pageOffset * 300f
                                 rotationY = pageOffset * 15f
                                 alpha = lerp(
@@ -111,14 +113,11 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                             }
                             .clip(RoundedCornerShape(20.dp))
                     ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            // 메모 색상 배경
+                        Box(modifier = Modifier.fillMaxSize()) {
                             Image(
                                 painter = painterResource(id = bgColor),
                                 contentDescription = null,
-                                contentScale = ContentScale.Crop, //크기 조정
+                                contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize()
                             )
 
@@ -126,21 +125,35 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                                 modifier = Modifier
                                     .padding(20.dp)
                                     .fillMaxSize(),
-
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.SpaceBetween
                             ) {
-                                // 메모 내용
+                                // 이미지 url 있으면 이미지 출력
+                                if (imageUrl != null) {
+                                    Image(
+                                        painter = rememberAsyncImagePainter(imageUrl),
+                                        contentDescription = "메모 이미지",
+                                        modifier = Modifier
+                                            .fillMaxWidth(0.8f)
+                                            .height(140.dp)
+                                            .clip(RoundedCornerShape(10.dp))
+                                    )
+                                }
+
+                                // 텍스트 있는 경우 텍스트 출력
+                                if (!content.isNullOrEmpty()) {
+                                    Text(
+                                        text = content,
+                                        fontSize = 14.sp,
+                                        textAlign = TextAlign.Center,
+                                        color = Color.DarkGray,
+                                        style = TextStyle(fontWeight = FontWeight.Medium)
+                                    )
+                                }
+
+                                // 작성일
                                 Text(
-                                    text = paragraph["content"] as String,
-                                    fontSize = 14.sp,
-                                    textAlign = TextAlign.Center,
-                                    color = Color.DarkGray,
-                                    style = TextStyle(fontWeight = FontWeight.Medium)
-                                )
-                                // 작성일 (하단에 고정)
-                                Text(
-                                    text = "작성일 : ${paragraph["createdAt"]}",
+                                    text = "작성일 : ${paragraph["createAt"]}",
                                     fontSize = 12.sp,
                                     color = Color.Gray,
                                     textAlign = TextAlign.End,
@@ -160,11 +173,12 @@ fun BookDetailScreen(navController: NavController, bookId: Int) {
                     activeColor = Color.DarkGray,
                     inactiveColor = Color.White
                 )
+
                 Spacer(modifier = Modifier.height(10.dp))
 
                 // 메모하기 버튼
                 Button(
-                    onClick = { navController.navigate("selectMemo")}, //메모 선택페이지 이동
+                    onClick = { navController.navigate("selectMemo") },
                     modifier = Modifier
                         .width(110.dp)
                         .height(40.dp)
