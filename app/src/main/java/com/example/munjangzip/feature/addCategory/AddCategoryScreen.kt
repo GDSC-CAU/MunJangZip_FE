@@ -19,8 +19,9 @@ import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.appbar.TopBarWidget
 import com.example.munjangzip.ui.BackGroundBubble
-
 val LightYellow = Color(0xFFFFF2D3) // 연한 노란색
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCategoryScreen(navController: NavController, viewModel: AddCategoryViewModel = hiltViewModel()) {
@@ -65,8 +66,21 @@ fun AddCategoryScreen(navController: NavController, viewModel: AddCategoryViewMo
 
                 Spacer(modifier = Modifier.padding(16.dp))
 
+                when (state) {
+                    is AddCategoryState.Loading -> CircularProgressIndicator()
+                    is AddCategoryState.Success -> {
+                        //  성공하면 자동으로 `CategoryScreen`으로 이동
+                        LaunchedEffect(Unit) {
+                            navController.navigate("category") {
+                                popUpTo("addCategory") { inclusive = true } //현재 페이지 스택에서 제거
+                            }
+                        }
+                    }
+                    else -> {}
+                }
+
                 Button(
-                    onClick = { viewModel.addCategory(text) },
+                    onClick = { viewModel.addCategory(text) { navController.navigate("category") } }, //성공 시 이동
                     modifier = Modifier.width(120.dp).height(45.dp).shadow(8.dp, RoundedCornerShape(15.dp)),
                     shape = RoundedCornerShape(15.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.98f))
