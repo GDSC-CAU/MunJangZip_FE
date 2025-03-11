@@ -99,6 +99,12 @@ dependencies {
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
+    // DataStore Preferences
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    //Kotlin 비동기 데이터 저장
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
 
 }
 
