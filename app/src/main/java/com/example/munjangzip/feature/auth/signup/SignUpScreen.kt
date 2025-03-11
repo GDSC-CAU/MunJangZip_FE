@@ -108,7 +108,8 @@ fun SignUpScreen(navController: NavController) {
                 textInputValue = password,
                 onTextChange = { password = it },
                 textFieldColor = Color.White,
-                fishImage = R.drawable.fish_gray
+                fishImage = R.drawable.fish_gray,
+
             )
             SignUpInputWidget(
                 textLabel = "당신의 도서관 이름은?",
@@ -118,11 +119,30 @@ fun SignUpScreen(navController: NavController) {
                 fishImage = R.drawable.fish_pink
             )
 
-
             Spacer(modifier = Modifier.padding(10.dp))
 
             Button(
-                onClick = { viewModel.signUp(nickname, libraryName, email, password) },
+                onClick = {
+                    when {
+                        email.isBlank() || nickname.isBlank() || password.isBlank() || libraryName.isBlank() -> {
+                            // 하나라도 안쓰면 토스트출력
+                            Toast.makeText(context, "모든 필드를 입력해주세요!", Toast.LENGTH_SHORT).show()
+                        }
+                        password.length < 8 -> {
+                            // 비번 8자리 이하면 토스트 출력
+                            Toast.makeText(context, "비밀번호는 8자 이상 입력해주세요!", Toast.LENGTH_SHORT).show()
+
+                        }
+                        !isValidEmail(email) -> {
+                            //이메일 형식 안맞으면 토스트 출력
+                            Toast.makeText(context, "올바른 이메일 형식을 입력해주세요!", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            // 다 만족하면 회원가입 진행
+                            viewModel.signUp(nickname, libraryName, email, password)
+                        }
+                    }
+                },
                 modifier = Modifier.fillMaxWidth(0.8f)
             ) {
                 Text(text = "회원가입", fontSize = 16.sp)
@@ -133,4 +153,8 @@ fun SignUpScreen(navController: NavController) {
             }
         }
     }
+}
+//이메일 형식 맞는지 검사하는 함수
+fun isValidEmail(email: String): Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }

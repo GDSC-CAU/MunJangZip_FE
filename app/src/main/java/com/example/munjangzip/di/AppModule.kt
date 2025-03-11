@@ -36,7 +36,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http:///") //백엔드 주소
+            .baseUrl("http://ㅜㅜㅜㅜ/") //백엔드 주소
             .client(client) // 로깅 인터셉터 적용
             .addConverterFactory(GsonConverterFactory.create())
             .build()
