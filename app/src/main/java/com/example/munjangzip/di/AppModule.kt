@@ -2,6 +2,8 @@ package com.example.munjangzip.di
 
 import com.example.munjangzip.feature.auth.signup.SignUpApi
 import com.example.munjangzip.feature.auth.signup.SignUpRepository
+import com.example.munjangzip.feature.auth.signin.SignInApi
+import com.example.munjangzip.feature.auth.signin.SignInRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,12 +38,14 @@ object AppModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://ㅜㅜㅜㅜ/") //백엔드 주소
+            .baseUrl("http://햐햐히히히히/") //백엔드 주소
             .client(client) // 로깅 인터셉터 적용
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
+
+    //회원가입
     @Provides
     @Singleton
     fun provideSignUpApi(retrofit: Retrofit): SignUpApi {
@@ -52,5 +56,18 @@ object AppModule {
     @Singleton
     fun provideSignUpRepository(api: SignUpApi): SignUpRepository {
         return SignUpRepository(api)
+    }
+
+    //로그인
+    @Provides
+    @Singleton
+    fun provideSignInApi(retrofit: Retrofit): SignInApi {
+        return retrofit.create(SignInApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSignInRepository(api: SignInApi): SignInRepository {
+        return SignInRepository(api)
     }
 }
