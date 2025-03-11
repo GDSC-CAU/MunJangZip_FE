@@ -82,6 +82,24 @@ dependencies {
 
     implementation (libs.play.services.code.scanner)
 
+
+    // 레트로핏
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Hilt (의존성 주입하는거)
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+    // Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+    // Gson (JSON 파싱위한거 )
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+
 }
 
 
