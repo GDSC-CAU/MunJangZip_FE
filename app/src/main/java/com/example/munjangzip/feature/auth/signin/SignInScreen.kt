@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munjangzip.R
@@ -37,40 +38,33 @@ import com.example.munjangzip.feature.createMemo.LightYellow
 import com.example.munjangzip.ui.SimpleBackGround
 import com.example.munjangzip.ui.theme.GrayishBlue
 import com.example.munjangzip.ui.theme.PaleRed
-
 @Composable
 fun SignInScreen(navController: NavController) {
-
     val viewModel: SignInViewModel = hiltViewModel()
-    val uiState = viewModel.state.collectAsState()
+    val uiState by viewModel.state.collectAsState()
 
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
-
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     val context = LocalContext.current
-    LaunchedEffect(key1 = uiState.value) {
-        when(uiState.value) {
+
+    LaunchedEffect(uiState) {
+        when (uiState) {
             is SignInState.Success -> {
-                navController.navigate("category") { //로그인 성공하면 메인화면으로
-                    popUpTo("login") { inclusive = true} // 로그인 스크린 스택에서 제거
+                Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
+                navController.navigate("category") {
+                    popUpTo("login") { inclusive = true }
                 }
             }
             is SignInState.Error -> {
-                Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, (uiState as SignInState.Error).message, Toast.LENGTH_SHORT).show()
             }
             else -> {}
         }
     }
 
-    Scaffold (
+    Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            TopBarWidget(navController)
-        }
+        topBar = { TopBarWidget(navController) }
     ) {
         SimpleBackGround()
         Column(
@@ -79,31 +73,41 @@ fun SignInScreen(navController: NavController) {
                 .padding(it),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
             Spacer(modifier = Modifier.padding(8.dp))
             Image(
                 painter = painterResource(R.drawable.apptitle),
-                contentDescription = "문장집",
-                //modifier = Modifier.size(300.dp)
+                contentDescription = "문장집"
             )
+
             SignUpInputWidget(
                 textLabel = "이메일을 입력해주세요",
                 textInputValue = email,
-                onTextChange = { email = it},
+                onTextChange = { email = it },
                 textFieldColor = LightYellow,
                 fishImage = R.drawable.yellofish
             )
 
-
             SignUpInputWidget(
                 textLabel = "비밀번호를 입력해주세요",
                 textInputValue = password,
-                onTextChange = { password = it},
+                onTextChange = { password = it },
                 textFieldColor = Color.White,
                 fishImage = R.drawable.fish_gray
             )
 
+            Spacer(modifier = Modifier.padding(30.dp))
+
+            Button(
+                onClick = { viewModel.signIn(email, password) },
+                modifier = Modifier.fillMaxWidth(0.3f)
+            ) {
+                Text(text = "로그인", fontSize = 16.sp)
+            }
+
+            if (uiState is SignInState.Loading) {
+                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+            }
         }
     }
 }
