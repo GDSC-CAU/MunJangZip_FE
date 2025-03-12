@@ -18,6 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,15 +27,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.ui.BackGround
 import com.example.munjangzip.ui.theme.BrightYellow
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookListScreen(navController: NavController) {
+fun BookListScreen(navController: NavController, viewModel: BookListViewModel = hiltViewModel()) {
+    val userState by viewModel.userState.collectAsState()
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -41,9 +45,7 @@ fun BookListScreen(navController: NavController) {
                 modifier = Modifier.height(130.dp),
                 shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 32.dp),
                 shadowElevation = 8.dp
-                //color =
-            )
-            {
+            ) {
                 TopAppBar(
                     modifier = Modifier.height(100.dp),
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -54,7 +56,7 @@ fun BookListScreen(navController: NavController) {
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            IconButton(onClick = {navController.popBackStack()}) {
+                            IconButton(onClick = { navController.popBackStack() }) {
                                 Image(
                                     painter = painterResource(R.drawable.chevron_left),
                                     contentDescription = "뒤로 가기",
@@ -67,36 +69,21 @@ fun BookListScreen(navController: NavController) {
                                 horizontalAlignment = Alignment.Start
                             ) {
                                 Text(
-                                    "수정 님의" ,
+                                    text = "${userState?.result?.nickName ?: "사용자"} 님의",
                                     fontSize = 14.sp,
                                     color = Color.Gray,
                                     fontWeight = FontWeight.Medium
                                 )
                                 Text(
-                                    "'말랑말랑' 도서관",
+                                    text = "'${userState?.result?.libraryName?: ""}' 도서관",
                                     fontSize = 20.sp,
                                     color = Color.DarkGray,
-                                    fontWeight = FontWeight.Bold,
-
-                                    )
+                                    fontWeight = FontWeight.Bold
+                                )
                             }
                         }
-
-
-                    },
-                    /*
-                    navigationIcon = {
-                        IconButton(onClick = {}) {
-                            Image(
-                                painter = painterResource(R.drawable.chevron_left),
-                                contentDescription = null,
-                            )
-                        }
-                    }*/
-
-
-                    )
-
+                    }
+                )
             }
         }
     ) {
