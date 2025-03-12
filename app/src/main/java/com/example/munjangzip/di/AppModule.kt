@@ -21,6 +21,8 @@ import javax.inject.Singleton
 import com.example.munjangzip.feature.addCategory.CategoryRepository
 import com.example.munjangzip.feature.category.GetCategoryApi
 import com.example.munjangzip.feature.category.GetCategoryRepository
+import com.example.munjangzip.feature.savebook.BarCodeApi
+import com.example.munjangzip.feature.savebook.GetBookRepository
 import com.example.munjangzip.network.AuthApi
 
 @Module
@@ -139,6 +141,19 @@ object AppModule {
     @Singleton
     fun provideGetCategoryRepository(api: GetCategoryApi, userPreferences: UserPreferences): GetCategoryRepository {
         return GetCategoryRepository(api, userPreferences)
+    }
+
+    //isbn 책 정보 조회 API
+    @Provides
+    @Singleton
+    fun provideBarCodeAPI(retrofit: Retrofit): BarCodeApi {
+        return retrofit.create(BarCodeApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetBookRepository(api: BarCodeApi, userPreferences: UserPreferences): GetBookRepository {
+        return GetBookRepository(api, userPreferences)
     }
 
 }

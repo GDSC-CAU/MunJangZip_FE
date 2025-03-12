@@ -1,6 +1,7 @@
 package com.example.munjangzip.feature.savebook
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +43,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.munjangzip.R
 import com.example.munjangzip.appbar.TopBarWidget
@@ -44,10 +52,13 @@ import com.example.munjangzip.ui.theme.Gray10
 import com.example.munjangzip.ui.theme.Ivory
 
 @Composable
-fun TakePhotoPage(navController: NavController) {
+fun TakePhotoPage(navController: NavController, viewModel: GetBookViewModel = hiltViewModel()) {
     val context = LocalContext.current
+    var isScanning by remember { mutableStateOf(false) }  // 바코드 스캔 여부
+    var isLoading by remember { mutableStateOf(false) }   // API 로딩 상태
 
-    var isSuccess = true //isbn 넘버로 데이터를 불러오기 성공여부
+    var stringIsbn: String = null.toString() //isbn 저장
+    val loadBookState by viewModel.bookState.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -116,15 +127,18 @@ fun TakePhotoPage(navController: NavController) {
 
             Spacer(modifier = Modifier.padding(8.dp))
             ElevatedButton(
-                onClick = { (context as? Activity)?.startMLKitScanner(); //바코드 인식 실행
-                    if (isSuccess) { //바코드로 책 정보 불러오기 성공하면
-                        navController.navigate("bookInfo")
-                    }
-                    else { //실패했을 경우
-                        navController.navigate("noBookInfo")
-                    }
+                onClick = {
+                    (context as? Activity)?.startMLKitScanner { scannedIsbn ->
+                        isScanning = false  //  스캔 완료
+                        isLoading = true    //  데이터 로딩 시작
+                        Log.d("TakePhotoPage", "바코드 스캔 완료: $scannedIsbn")
 
-                  },
+                        // ISBN이 정상적으로 스캔되면 ViewModel에서 API 호출
+                        viewModel.fetchBooks(scannedIsbn)
+                        stringIsbn = scannedIsbn
+                    }
+                },
+
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Gray10
@@ -138,6 +152,22 @@ fun TakePhotoPage(navController: NavController) {
                         fontFamily = FontFamily.Monospace
                     )
                 )
+            }
+        }
+    }
+
+    // LaunchedEffect로 API 결과 확인 후 화면 이동
+    LaunchedEffect(loadBookState) {
+        if (isLoading) {  // 🔥 바코드를 스캔하고 API 요청 후에만 실행되도록 변경
+            loadBookState?.result?.title?.let {
+                Log.d("TakePhotoPage", "책 정보 로드 성공: $it")
+                isLoading = false
+                //navController.currentBackStackEntry?.savedStateHandle?.set("isbn_key", stringIsbn )
+                navController.navigate("bookInfo")
+            } ?: run {
+                Log.e("TakePhotoPage", "책 정보 불러오기 실패: 응답이 null")
+                isLoading = false
+                navController.navigate("noBookInfo")
             }
         }
     }

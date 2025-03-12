@@ -26,6 +26,7 @@ import com.example.munjangzip.feature.createMemo.CreateMemo
 import com.example.munjangzip.feature.selectMemo.SelectMemo
 import com.example.munjangzip.feature.createMemo.CreateMemoPic
 import com.example.munjangzip.feature.auth.signin.SignInViewModel
+import com.example.munjangzip.feature.savebook.GetBookViewModel
 
 @Composable
 fun MainApp(userPreferences: UserPreferences) {
@@ -33,6 +34,8 @@ fun MainApp(userPreferences: UserPreferences) {
         val navController = rememberNavController()
 
         val viewModel: SignInViewModel = hiltViewModel()
+
+        val bookViewModel: GetBookViewModel = hiltViewModel() //공유 뷰모델로 바코드 인식후 bookinfo페이지와 뷰모델 데이터 공유
 
         // UserPreferences에서 저장된 accessToken 확인
         val accessToken by userPreferences.accessToken.collectAsState(initial = null)
@@ -66,7 +69,7 @@ fun MainApp(userPreferences: UserPreferences) {
             }
 
             composable(route = "takephoto") {
-                TakePhotoPage(navController = navController)
+                TakePhotoPage(navController = navController, bookViewModel)
             }
 
             // 카테고리 추가 네비게이션
@@ -82,7 +85,7 @@ fun MainApp(userPreferences: UserPreferences) {
 
             //바코드로 찍은 책을 불러와서 등록하는 페이지 네비게이션
             composable(route = "bookInfo") {
-                LoadBookInfoScreen(navController = navController)
+                LoadBookInfoScreen(navController = navController, bookViewModel)
             }
 
             //바코드로 인식한 책의 정보를 불러올 수 없을 때 네비게이션
