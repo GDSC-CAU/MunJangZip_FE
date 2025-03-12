@@ -1,39 +1,35 @@
 package com.example.munjangzip.data
 
 import android.content.Context
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import dagger.hilt.android.qualifiers.ApplicationContext
+import android.content.SharedPreferences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import javax.inject.Inject
-import javax.inject.Singleton
+import kotlinx.coroutines.flow.flow
 
-private val Context.dataStore by preferencesDataStore("user_prefs")
+class UserPreferences(context: Context) {
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
-@Singleton // 싱글톤으로
-class UserPreferences @Inject constructor(@ApplicationContext private val context: Context) {
-
-    companion object {
-        private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
+    val accessToken: Flow<String?> = flow {
+        emit(prefs.getString("ACCESS_TOKEN", null))
     }
 
-    // 토큰 저장
-    suspend fun saveAccessToken(token: String) {
-        context.dataStore.edit { preferences ->
-            preferences[ACCESS_TOKEN_KEY] = token
-        }
+    val refreshToken: Flow<String?> = flow {
+        emit(prefs.getString("REFRESH_TOKEN", null))
     }
 
-    // 토큰 가져오기
-    val accessToken: Flow<String?> = context.dataStore.data
-        .map { preferences -> preferences[ACCESS_TOKEN_KEY] }
+    // accessToken & refreshToken 저장 메서드 추가
+    fun saveTokens(accessToken: String, refreshToken: String) {
+        prefs.edit()
+            .putString("ACCESS_TOKEN", accessToken)
+            .putString("REFRESH_TOKEN", refreshToken)
+            .apply()
+    }
 
-    // 토큰 삭제 (로그아웃 시 사용)
-    suspend fun clearAccessToken() {
-        context.dataStore.edit { preferences ->
-            preferences.remove(ACCESS_TOKEN_KEY)
-        }
+    // 로그아웃 시 토큰 삭제 메서드 추가
+    fun clearTokens() {
+        prefs.edit()
+            .remove("ACCESS_TOKEN")
+            .remove("REFRESH_TOKEN")
+            .apply()
     }
 }

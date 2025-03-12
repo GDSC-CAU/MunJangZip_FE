@@ -1,12 +1,16 @@
 package com.example.munjangzip.feature.auth.signin
 
-import javax.inject.Inject
+import com.example.munjangzip.data.UserPreferences
 
-class SignInRepository @Inject constructor(
-    private val api: SignInApi
+class SignInRepository(
+    private val api: SignInApi,
+    private val userPreferences: UserPreferences
 ) {
-    suspend fun login(email: String, password: String): SignInResponse {
-        val request = SignInRequest(email, password)
-        return api.signIn(request)
+    suspend fun signIn(email: String, password: String): SignInResponse {
+        return api.signIn(SignInRequest(email, password))
+    }
+
+    fun saveTokens(accessToken: String, refreshToken: String) {
+        userPreferences.saveTokens(accessToken, refreshToken)
     }
 }

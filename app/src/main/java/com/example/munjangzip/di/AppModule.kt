@@ -19,10 +19,22 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import com.example.munjangzip.feature.addCategory.CategoryRepository
+import com.example.munjangzip.feature.category.GetCategoryApi
+import com.example.munjangzip.feature.category.GetCategoryRepository
+import com.example.munjangzip.network.AuthApi
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+
+    // AuthApi 추가 (토큰 재발급용)
+    @Provides
+    @Singleton
+    fun provideAuthApi(retrofit: Retrofit): AuthApi {
+        return retrofit.create(AuthApi::class.java)
+    }
+
 
     //UserPreferences Hilt에 제공
     @Provides
@@ -67,7 +79,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://아 귀찮아 진짜이거ㅎㅎ/") // 백엔드 주소
+            .baseUrl("http://히히히히히/") // 백엔드 주소
             .client(client) // OkHttpClient 적용
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -95,9 +107,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSignInRepository(api: SignInApi): SignInRepository {
-        return SignInRepository(api)
+    fun provideSignInRepository(
+        api: SignInApi,
+        userPreferences: UserPreferences
+    ): SignInRepository {
+        return SignInRepository(api, userPreferences)
     }
+
 
     // 카테고리 추가 API
     @Provides
@@ -112,5 +128,17 @@ object AppModule {
         return CategoryRepository(api, userPreferences)
     }
 
+    // 카테고리 조회 API
+    @Provides
+    @Singleton
+    fun provideGetCategoryApi(retrofit: Retrofit): GetCategoryApi {
+        return retrofit.create(GetCategoryApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCategoryRepository(api: GetCategoryApi, userPreferences: UserPreferences): GetCategoryRepository {
+        return GetCategoryRepository(api, userPreferences)
+    }
 
 }
