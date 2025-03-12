@@ -4,11 +4,11 @@ data class GetCategoryResponse(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
-    val result: LibraryData
+    val result: CategoryResult
 )
 
-data class LibraryData(
-    val nickname: String,
+data class CategoryResult(
+    val nickName: String,
     val libraryName: String,
     val categoryList: List<CategoryItem>
 )
@@ -16,7 +16,7 @@ data class LibraryData(
 data class CategoryItem(
     val categoryId: Int,
     val categoryName: String,
-    val recentBookCovers: String?, // 책 표지 URL (없으면 null)
+    val recentBookCovers: String,
     val bookCount: Int,
     val memoCount: Int
 )

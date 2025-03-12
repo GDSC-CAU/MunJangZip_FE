@@ -29,58 +29,74 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextAlign
 import coil.compose.AsyncImage
 import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
 import coil.compose.rememberAsyncImagePainter
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun BookCategoryPager(navController: NavController, categories: List<CategoryItem>?) {
-    val pagerState = rememberPagerState(pageCount = { categories?.size ?: 0 })
+fun BookCategoryPager(navController: NavController, categories: List<CategoryItem>) {
+    val pagerState = rememberPagerState(pageCount = { categories.size })
 
-    if (categories.isNullOrEmpty()) {
-        // 데이터가 없을 경우 기본 메시지 표시
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("카테고리가 없습니다.", color = Color.Gray, fontSize = 16.sp)
-        }
-        return
-    }
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val imageWidth = 200.dp
+    val imageSpacing = 8.dp
+    val overlapWidth = screenWidth - imageWidth - imageSpacing
 
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(horizontal = 40.dp),
-        pageSpacing = 8.dp
+        contentPadding = PaddingValues(horizontal = overlapWidth / 2),
+        pageSpacing = imageSpacing
     ) { page ->
         val category = categories[page]
 
         Card(
             Modifier
                 .size(width = 200.dp, height = 290.dp)
-                .padding(horizontal = 8.dp)
-                .clickable { navController.navigate("booklist") }
+                .padding(horizontal = imageSpacing / 2)
+                .graphicsLayer {
+                    val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+                    alpha = lerp(0.5f, 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f))
+                }
+                .clickable { navController.navigate("booklist") },
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp), //그림자 없애고
+            colors = CardDefaults.cardColors(containerColor = Color.Black) // 완전 블랙으로
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                if (!category.recentBookCovers.isNullOrEmpty()) {
-                    // ✅ 책 이미지가 있을 때
-                    Image(
-                        painter = rememberAsyncImagePainter(category.recentBookCovers),
-                        contentDescription = "Book Image",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    // ✅ 책 이미지가 없을 때 (검은색 배경)
-                    Box(
-                        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.8f))
-                    )
+                // 책 이미지 or 검은 화면
+                val coverImage = category.recentBookCovers
+                if (coverImage != null) {
+                    if (coverImage.isNotEmpty()) {
+                        Image(
+                            painter = rememberAsyncImagePainter(coverImage),
+                            contentDescription = "Book Cover",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                        //블랙 오버레이
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.Black.copy(alpha = 0.5f))
+                        )
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.Black)
+                        )
+                    }
                 }
 
+                // 카테고리 정보 표시
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(top = 80.dp, start = 16.dp, end = 16.dp),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 80.dp, start = 16.dp, end = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
@@ -90,9 +106,7 @@ fun BookCategoryPager(navController: NavController, categories: List<CategoryIte
                         color = Color.White,
                         textAlign = TextAlign.Center
                     )
-
                     Spacer(modifier = Modifier.height(14.dp))
-
                     Text(
                         text = "등록된 책 : ${category.bookCount}권\n메모 : ${category.memoCount}개",
                         fontSize = 12.sp,

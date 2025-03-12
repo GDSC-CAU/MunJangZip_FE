@@ -11,9 +11,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -34,20 +39,20 @@ import androidx.compose.runtime.LaunchedEffect
 import coil.compose.rememberAsyncImagePainter
 import androidx.compose.runtime.collectAsState
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.munjangzip.R
 import com.example.munjangzip.feature.category.GetCategoryApi
 import com.example.munjangzip.ui.BackGround
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryScreen(navController: NavController, viewModel: CategoryViewModel = hiltViewModel()) {
-
-    val categoryState = viewModel.categoryState.collectAsState(initial = null).value
-
-    // 🚀 데이터 가져오기
-    LaunchedEffect(Unit) {
-        viewModel.fetchCategories()
-    }
+    val categoryState by viewModel.categoryState.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -65,49 +70,80 @@ fun CategoryScreen(navController: NavController, viewModel: CategoryViewModel = 
                     title = {
                         Column(
                             verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxSize().padding(start = 16.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(start = 16.dp),
                             horizontalAlignment = Alignment.Start
                         ) {
                             Text(
-                                "${categoryState?.result?.nickname ?: "사용자"} 님의",
+                                text = "${categoryState?.result?.nickName ?: "사용자"} 님의",
                                 fontSize = 14.sp,
                                 color = Color.Gray,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                "'${categoryState?.result?.libraryName ?: "도서관"}'",
+                                text = "'${categoryState?.result?.libraryName ?: ""}' 도서관",
                                 fontSize = 20.sp,
                                 color = Color.DarkGray,
                                 fontWeight = FontWeight.Bold,
                             )
                         }
-                    }
+                    },
                 )
             }
         }
-    ) { paddingValues ->
-        Surface(modifier = Modifier.fillMaxSize()) {
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
             BackGround()
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.padding(vertical = 20.dp))
-
-                if (categoryState?.result?.categoryList.isNullOrEmpty()) {
-                    // ✅ 데이터가 없을 경우 로딩 메시지 표시
-                    Text(text = "카테고리를 불러오는 중...", color = Color.Gray, fontSize = 16.sp)
-                } else {
-                    // ✅ 데이터가 있을 경우 BookCategoryPager 표시
-                    categoryState?.result?.categoryList?.let { categoryList: List<CategoryItem> ->
-                        BookCategoryPager(navController, categoryList)
-
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.padding(vertical = 20.dp))
+            Box(contentAlignment = Alignment.Center) {
+                ElevatedButton(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .height(65.dp)
+                        .width(200.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = BrightYellow,
+                        contentColor = Color.Gray
+                    ),
+                    onClick = { navController.navigate("addCategory") },
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text(
+                        text = "카테고리 추가하기",
+                        modifier = Modifier.padding(start = 8.dp),
+                        style = TextStyle(
+                            fontSize = 17.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Monospace
+                        )
+                    )
                 }
-                }
+                Image(
+                    painter = painterResource(R.drawable.fish),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .zIndex(1f)
+                        .offset(x = (-105).dp)
+                        .size(100.dp)
+                )
             }
+            Spacer(modifier = Modifier.padding(16.dp))
+
+            //카테고리 리스트-> BookCategoryPager에 전달
+            categoryState?.result?.categoryList?.let { categories ->
+                BookCategoryPager(navController, categories)
+            }
+            Spacer(modifier = Modifier.padding(13.dp))
         }
     }
 }
