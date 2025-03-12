@@ -104,6 +104,7 @@ dependencies {
 
     //Kotlin 비동기 데이터 저장
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
 
 
 }

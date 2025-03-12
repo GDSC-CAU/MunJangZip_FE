@@ -10,22 +10,22 @@ data class SignInRequest(
 )
 
 // 로그인 응답 데이터 모델
+
 data class SignInResponse(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
-    val result: TokenData? // 성공하면 토큰 발급
+    val result: TokenResult?
 )
 
-// 반환 데이터
-data class TokenData(
+//반환 데이터
+data class TokenResult(
     val accessToken: String,
-    val refreshToken: String,
-    val memberId: Int
+    val refreshToken: String
 )
 
 // Retrofit API 인터페이스
 interface SignInApi {
-    @POST("member/login/email")
+    @POST("/member/login/email")
     suspend fun signIn(@Body request: SignInRequest): SignInResponse
 }
