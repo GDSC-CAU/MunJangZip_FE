@@ -11,7 +11,7 @@ class GetCategoryRepository @Inject constructor(
 ) {
     suspend fun getCategories(): GetCategoryResponse? {
         return try {
-            // 저장된 토큰 가져오기
+            // 저장된 `accessToken` 가져오기
             val accessToken = runBlocking { userPreferences.accessToken.first() }
             if (accessToken.isNullOrEmpty()) {
                 return null

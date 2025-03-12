@@ -1,8 +1,10 @@
-package com.example.munjangzip.feature.category
+package com.example.munjangzip.feature.booklist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munjangzip.data.UserPreferences
+import com.example.munjangzip.feature.category.GetCategoryRepository
+import com.example.munjangzip.feature.category.GetCategoryResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,26 +13,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(
+class BookListViewModel @Inject constructor(
     private val repository: GetCategoryRepository,
     private val userPreferences: UserPreferences
 ) : ViewModel() {
 
-    private val _categoryState = MutableStateFlow<GetCategoryResponse?>(null)
-    val categoryState: StateFlow<GetCategoryResponse?> = _categoryState.asStateFlow()
+    private val _userState = MutableStateFlow<GetCategoryResponse?>(null)
+    val userState: StateFlow<GetCategoryResponse?> = _userState.asStateFlow()
 
     init {
-        fetchCategories()
+        fetchUserInfo()
     }
 
-    private fun fetchCategories() {
+    private fun fetchUserInfo() {
         viewModelScope.launch {
             try {
                 val response = repository.getCategories()
-                _categoryState.value = response
+                _userState.value = response
             } catch (e: Exception) {
-                // 네트워크 오류 처리
-                _categoryState.value = null
+                _userState.value = null
             }
         }
     }
