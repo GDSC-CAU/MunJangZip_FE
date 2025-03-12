@@ -1,21 +1,20 @@
 package com.example.munjangzip.feature.auth.signin
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.munjangzip.data.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.munjangzip.data.UserPreferences
-
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val repository: SignInRepository,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences  // ✅ UserPreferences 주입
 ) : ViewModel() {
+
     private val _state = MutableStateFlow<SignInState>(SignInState.Nothing)
     val state = _state.asStateFlow()
 
@@ -24,30 +23,29 @@ class SignInViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val response = repository.login(email, password)
-
+                val response = repository.signIn(email, password)
                 if (response.isSuccess && response.result != null) {
-                    val accessToken = response.result.accessToken
-                    Log.d("SignIn", "로그인 성공! 토큰 저장: $accessToken")
-
-                    // ✅ 토큰 저장
-                    userPreferences.saveAccessToken(accessToken)
-
-                    _state.value = SignInState.Success(accessToken, response.result.memberId)
+                    userPreferences.saveTokens(
+                        response.result?.accessToken ?: "",
+                        response.result?.refreshToken ?: ""
+                    )
+                    _state.value = SignInState.Success
                 } else {
-                    _state.value = SignInState.Error(response.message)
+                    _state.value = SignInState.Error("로그인 실패: ${response.message}")
                 }
+
             } catch (e: Exception) {
-                _state.value = SignInState.Error("로그인 실패: ${e.message}")
+                _state.value = SignInState.Error("네트워크 오류: ${e.message}")
             }
         }
     }
 }
 
-
+// 상태 클래스 수정 (Success를 객체로 선언)
 sealed class SignInState {
     object Nothing : SignInState()
     object Loading : SignInState()
-    data class Success(val accessToken: String, val memberId: Int) : SignInState()
+    object Success : SignInState()
     data class Error(val message: String) : SignInState()
 }
+

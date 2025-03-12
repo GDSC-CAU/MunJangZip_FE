@@ -1,5 +1,3 @@
-
-
 package com.example.munjangzip.feature.category
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -29,87 +27,64 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextAlign
-
+import coil.compose.AsyncImage
+import androidx.compose.foundation.background
+import coil.compose.rememberAsyncImagePainter
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun BookCategoryPager(navController: NavController) { //카테고리를 가로 스크롤로 확인
+fun BookCategoryPager(navController: NavController, categories: List<CategoryItem>?) {
+    val pagerState = rememberPagerState(pageCount = { categories?.size ?: 0 })
 
-    val images = listOf( //테스트를 위해 이미지를 불러옴
-        R.drawable.book1,
-        R.drawable.book2,
-        R.drawable.book3,
-    )
-    val categories = listOf("최애 책들!", "공포오..", "역사 책 모음집 긴 텍스트 예시") // 테스트 - 카테고리
-    val books = listOf(14, 20, 3) // 테스트 - 책 개수
-    val memoCounts = listOf(67, 50, 90) // 테스트 - 메모 개수
-
-
-
-    val pagerState = rememberPagerState (pageCount = {
-        images.size
-    })
-
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp // 화면 너비 가져오기
-    val imageWidth = 200.dp // 이미지의 너비
-    val imageSpacing = 8.dp // 이미지 간의 간격 (조절 가능)
-    val overlapWidth = screenWidth - imageWidth - imageSpacing // 겹쳐야 할 길이 계산
+    if (categories.isNullOrEmpty()) {
+        // 데이터가 없을 경우 기본 메시지 표시
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("카테고리가 없습니다.", color = Color.Gray, fontSize = 16.sp)
+        }
+        return
+    }
 
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(horizontal = overlapWidth / 2), // 좌우 패딩 추가
-        pageSpacing = imageSpacing // 페이지 간 간격 조절
-
+        contentPadding = PaddingValues(horizontal = 40.dp),
+        pageSpacing = 8.dp
     ) { page ->
+        val category = categories[page]
+
         Card(
             Modifier
-                .size(width = 200. dp, height = 290.dp)
-                .padding(horizontal = imageSpacing / 2) // 좌우 간격 조정
-                .graphicsLayer {
-                    val pageOffset = ( //pageoffset 계산
-                            (pagerState.currentPage - page) + pagerState
-                                .currentPageOffsetFraction
-                            ).absoluteValue
-
-                    alpha = lerp( //페이드인/아웃 효과
-                        start = 0.5f, //페이지 이동시 현재페이지에서 멀어질수록 투명해짐
-                        stop = 1f,
-                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                    )
-                }
-                .clickable {
-                    navController.navigate("booklist")
-                }
+                .size(width = 200.dp, height = 290.dp)
+                .padding(horizontal = 8.dp)
+                .clickable { navController.navigate("booklist") }
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                // 책 이미지
-                Image(
-                    painter = painterResource(images[page]),
-                    contentDescription = "Book Image $page",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .drawWithContent {
-                            drawContent()
-                            drawRect(
-                                color = Color.Black.copy(alpha = 0.8f) // 블랙 오버레이 적용
-                            )
-                        }
-                )
+                if (!category.recentBookCovers.isNullOrEmpty()) {
+                    // ✅ 책 이미지가 있을 때
+                    Image(
+                        painter = rememberAsyncImagePainter(category.recentBookCovers),
+                        contentDescription = "Book Image",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                } else {
+                    // ✅ 책 이미지가 없을 때 (검은색 배경)
+                    Box(
+                        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.8f))
+                    )
+                }
 
-                // 책 정보표시
                 Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 80.dp, start = 16.dp, end = 16.dp),
+                    modifier = Modifier.fillMaxSize().padding(top = 80.dp, start = 16.dp, end = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // 카테고리 제목
                     Text(
-                        text = categories[page],
+                        text = category.categoryName,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
@@ -118,9 +93,8 @@ fun BookCategoryPager(navController: NavController) { //카테고리를 가로 �
 
                     Spacer(modifier = Modifier.height(14.dp))
 
-                    // 등록된 책 개수 및 메모 개수
                     Text(
-                        text = "등록된 책 : ${books[page]}권\n메모 : ${memoCounts[page]}개",
+                        text = "등록된 책 : ${category.bookCount}권\n메모 : ${category.memoCount}개",
                         fontSize = 12.sp,
                         color = Color.White,
                         textAlign = TextAlign.Center
