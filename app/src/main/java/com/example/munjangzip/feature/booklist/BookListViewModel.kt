@@ -21,6 +21,9 @@ class BookListViewModel @Inject constructor(
     private val _userState = MutableStateFlow<GetCategoryResponse?>(null)
     val userState: StateFlow<GetCategoryResponse?> = _userState.asStateFlow()
 
+    private val _bookListState = MutableStateFlow<BookResponse<List<BooksResult>>?>(null)
+    val bookListState: StateFlow<BookResponse<List<BooksResult>>?> = _bookListState.asStateFlow()
+
     init {
         fetchUserInfo()
     }
@@ -35,4 +38,15 @@ class BookListViewModel @Inject constructor(
             }
         }
     }
+
+//    fun fetchBooksByCategory(categoryId: Int) {
+//        viewModelScope.launch {
+//            try {
+//                val response = repository.getBooksByCategory(categoryId)
+//                _bookListState.value = response
+//            } catch (e: Exception) {
+//                _bookListState.value = null // 오류 발생 시 상태 초기화
+//            }
+//        }
+//    }
 }
