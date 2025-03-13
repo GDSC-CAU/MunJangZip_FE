@@ -23,7 +23,7 @@ data class BookListResult(
     val categoryId: Int,
     val categoryName: String,
     val memberId: Int,
-    val books: BooksResult
+    val books: List<BooksResult>
 )
 
 data class BooksResult(

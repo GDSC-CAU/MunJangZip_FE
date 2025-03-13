@@ -98,7 +98,7 @@ fun BookListScreen(navController: NavController, viewModel: BookListViewModel = 
                 .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            BookListGrid(navController)
+            BookListGrid(navController, viewModel)
         }
     }
 }

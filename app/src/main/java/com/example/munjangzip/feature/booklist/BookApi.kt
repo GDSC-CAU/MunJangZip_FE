@@ -16,7 +16,7 @@ interface BookApi {
 
 
     @GET("book/category/{categoryId}")
-    suspend fun checkBoookList(
-        @Header("Authorization") token: String,
-    ): BookResponse<BookListResult>
+    suspend fun checkBookList(
+        @Header("Authorization") accessToken: String,
+    ): Response<BookResponse<BookListResult>>
 }
