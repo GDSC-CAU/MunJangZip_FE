@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.munjangzip.data.UserPreferences
 import com.example.munjangzip.ui.theme.MunJangZipTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,10 +21,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val userPreferences = UserPreferences(this)
+
         enableEdgeToEdge()
         setContent {
             MunJangZipTheme {
-                MainApp()
+                MainApp(userPreferences = userPreferences)
             }
         }
     }

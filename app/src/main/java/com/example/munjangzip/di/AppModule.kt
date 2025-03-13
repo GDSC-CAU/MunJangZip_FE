@@ -19,8 +19,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import com.example.munjangzip.feature.addCategory.CategoryRepository
+import com.example.munjangzip.feature.booklist.BookApi
+import com.example.munjangzip.feature.booklist.BookRepository
 import com.example.munjangzip.feature.category.GetCategoryApi
 import com.example.munjangzip.feature.category.GetCategoryRepository
+import com.example.munjangzip.feature.savebook.BarCodeApi
+import com.example.munjangzip.feature.savebook.GetBookRepository
 import com.example.munjangzip.network.AuthApi
 
 @Module
@@ -79,7 +83,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://ddddddddd0/") // 백엔드 주소
+            .baseUrl("ㅎㅎㅎ") // 백엔드 주소
             .client(client) // OkHttpClient 적용
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -140,5 +144,32 @@ object AppModule {
     fun provideGetCategoryRepository(api: GetCategoryApi, userPreferences: UserPreferences): GetCategoryRepository {
         return GetCategoryRepository(api, userPreferences)
     }
+
+    //isbn 책 정보 조회 API
+    @Provides
+    @Singleton
+    fun provideBarCodeAPI(retrofit: Retrofit): BarCodeApi {
+        return retrofit.create(BarCodeApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetBookRepository(api: BarCodeApi, userPreferences: UserPreferences): GetBookRepository {
+        return GetBookRepository(api, userPreferences)
+    }
+
+    // 북리스트 정보 조회 API
+    @Provides
+    @Singleton
+    fun provideBookApi(retrofit: Retrofit): BookApi {
+        return retrofit.create(BookApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBookRepository(api: BookApi, userPreferences: UserPreferences): BookRepository {
+        return BookRepository(api, userPreferences)
+    }
+
 
 }
