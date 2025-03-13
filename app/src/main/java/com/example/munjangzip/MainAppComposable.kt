@@ -7,9 +7,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+
 import com.example.munjangzip.data.UserPreferences
 import com.example.munjangzip.feature.booklist.BookListScreen
 import com.example.munjangzip.feature.category.CategoryScreen
@@ -26,6 +29,8 @@ import com.example.munjangzip.feature.createMemo.CreateMemo
 import com.example.munjangzip.feature.selectMemo.SelectMemo
 import com.example.munjangzip.feature.createMemo.CreateMemoPic
 import com.example.munjangzip.feature.auth.signin.SignInViewModel
+import com.example.munjangzip.feature.booklist.BookListViewModel
+
 import com.example.munjangzip.feature.savebook.GetBookViewModel
 
 @Composable
@@ -36,6 +41,8 @@ fun MainApp(userPreferences: UserPreferences) {
         val viewModel: SignInViewModel = hiltViewModel()
 
         val bookViewModel: GetBookViewModel = hiltViewModel() //공유 뷰모델로 바코드 인식후 bookinfo페이지와 뷰모델 데이터 공유
+        val bookInfoViewModel: BookListViewModel = hiltViewModel()
+
 
         // UserPreferences에서 저장된 accessToken 확인
         val accessToken by userPreferences.accessToken.collectAsState(initial = null)
@@ -64,13 +71,36 @@ fun MainApp(userPreferences: UserPreferences) {
                 CategoryScreen(navController = navController)
             }
 
-            composable(route = "booklist") {
-                BookListScreen(navController = navController)
+//            composable(route = "booklist/{categoryId}") { backStackEntry ->
+//                val categoryId = backStackEntry.arguments?.getInt("categoryId")
+//                if (categoryId != null) {
+//                    BookListScreen(navController = navController, categoryId = categoryId)
+//                }
+//            }
+
+            //카테고리별 북리스트 페이지
+            composable(
+                route = "booklist/{categoryId}",
+                arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
+                BookListScreen(navController = navController, categoryId = categoryId)
             }
 
-            composable(route = "takephoto") {
-                TakePhotoPage(navController = navController, bookViewModel)
+//            composable(route = "takephoto/")
+//            { backStackEntry ->
+//                val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
+//                TakePhotoPage(navController = navController, bookViewModel, categoryId = categoryId)
+//            }
+            composable(
+                route = "takephoto/{categoryId}",
+                arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
+                TakePhotoPage(navController = navController, bookViewModel, categoryId = categoryId)
+
             }
+
 
             // 카테고리 추가 네비게이션
             composable(route = "addcategory") {
@@ -84,9 +114,22 @@ fun MainApp(userPreferences: UserPreferences) {
             }
 
             //바코드로 찍은 책을 불러와서 등록하는 페이지 네비게이션
-            composable(route = "bookInfo") {
-                LoadBookInfoScreen(navController = navController, bookViewModel)
+//            composable(route = "bookInfo/") { backStackEntry ->
+//                val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
+//                LoadBookInfoScreen(navController = navController, bookViewModel, categoryId = categoryId, bookInfoViewModel)
+//            }
+
+            composable(route = "bookInfo/{categoryId}") { backStackEntry ->
+                val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull() ?: 1
+                LoadBookInfoScreen(
+                    navController = navController,
+                    viewModel = bookViewModel,
+                    categoryId = categoryId,
+                    bookInfoViewModel = bookInfoViewModel
+                )
+
             }
+
 
             //바코드로 인식한 책의 정보를 불러올 수 없을 때 네비게이션
             composable(route = "noBookInfo") {

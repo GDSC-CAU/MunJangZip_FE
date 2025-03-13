@@ -4,10 +4,11 @@ data class GetBookResponse(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
-    val result: BookResult
+    val result: GetBookResult
 )
 
-data class BookResult(
+data class GetBookResult(
+
     val memberId: Int,
     val bookId: Int,
     val title: String,

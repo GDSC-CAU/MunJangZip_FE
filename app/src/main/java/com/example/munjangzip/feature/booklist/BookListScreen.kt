@@ -35,7 +35,8 @@ import com.example.munjangzip.ui.theme.BrightYellow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookListScreen(navController: NavController, viewModel: BookListViewModel = hiltViewModel()) {
+fun BookListScreen(navController: NavController, viewModel: BookListViewModel = hiltViewModel(), categoryId: Int) {
+
     val userState by viewModel.userState.collectAsState()
 
     Scaffold(
@@ -98,7 +99,7 @@ fun BookListScreen(navController: NavController, viewModel: BookListViewModel = 
                 .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            BookListGrid(navController)
+            BookListGrid(navController, viewModel, categoryId)
         }
     }
 }

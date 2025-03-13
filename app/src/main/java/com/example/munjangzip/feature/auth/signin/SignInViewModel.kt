@@ -12,7 +12,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val repository: SignInRepository,
-    private val userPreferences: UserPreferences  // ✅ UserPreferences 주입
+    val userPreferences: UserPreferences  // ✅ UserPreferences 주입
+
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<SignInState>(SignInState.Nothing)
@@ -39,6 +40,15 @@ class SignInViewModel @Inject constructor(
             }
         }
     }
+
+    fun signOut() {
+        viewModelScope.launch {
+            userPreferences.clearTokens() // 저장된 토큰 삭제
+            _state.value = SignInState.Nothing // 상태 초기화
+        }
+
+    }
+
 }
 
 // 상태 클래스 수정 (Success를 객체로 선언)
