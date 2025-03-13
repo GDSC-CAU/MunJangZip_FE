@@ -1,5 +1,6 @@
 package com.example.munjangzip.feature.booklist
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -27,16 +28,12 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.munjangzip.R
 @Composable
-fun BookListGrid(navController: NavController, viewModel: BookListViewModel) {
-//    val images = listOf( //테스트를 위해 이미지를 불러옴
-//        R.drawable.book1,
-//        R.drawable.book2,
-//        R.drawable.book3,
-//        R.drawable.book4
-//    )
+fun BookListGrid(navController: NavController, viewModel: BookListViewModel, categoryId: Int) {
+
+
     // ✅ 서버에서 책 목록 가져오기
-    LaunchedEffect(Unit) {
-        viewModel.fetchBookList(categoryId = 1) // 원하는 카테고리 ID 설정
+    LaunchedEffect(categoryId) {
+        viewModel.fetchBookList(categoryId = categoryId) // 원하는 카테고리 ID 설정
     }
 
     val bookListState by viewModel.bookListState.collectAsState()

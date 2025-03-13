@@ -1,5 +1,6 @@
 package com.example.munjangzip.feature.booklist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munjangzip.data.UserPreferences
@@ -59,13 +60,22 @@ class BookListViewModel @Inject constructor(
 
     fun fetchBookList(categoryId: Int) {
         viewModelScope.launch {
+            Log.d("BookListViewModel", "fetchBookList() called with categoryId: $categoryId")
+
             try {
-                val response = bookRepository.checkBook()
+                val response = bookRepository.checkBook(categoryId)
                 if (response != null) {
+                    Log.d("BookListViewModel", "Response received: $response") // ✅ 응답 확인 로그
                     _bookListState.value = response
+                }
+                else{
+                    Log.e("BookListViewModel", "Response is null")
+
                 }
             } catch (e: Exception) {
                 //_bookListState.value = null //null 발생시 기본값 유지
+                Log.e("BookListViewModel", "Error fetching book list: ${e.message}")
+
             }
         }
     }

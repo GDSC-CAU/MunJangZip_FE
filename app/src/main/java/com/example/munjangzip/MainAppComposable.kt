@@ -7,9 +7,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.munjangzip.data.UserPreferences
 import com.example.munjangzip.feature.booklist.BookListScreen
 import com.example.munjangzip.feature.category.CategoryScreen
@@ -64,8 +66,19 @@ fun MainApp(userPreferences: UserPreferences) {
                 CategoryScreen(navController = navController)
             }
 
-            composable(route = "booklist") {
-                BookListScreen(navController = navController)
+//            composable(route = "booklist/{categoryId}") { backStackEntry ->
+//                val categoryId = backStackEntry.arguments?.getInt("categoryId")
+//                if (categoryId != null) {
+//                    BookListScreen(navController = navController, categoryId = categoryId)
+//                }
+//            }
+
+            composable(
+                route = "booklist/{categoryId}",
+                arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
+                BookListScreen(navController = navController, categoryId = categoryId)
             }
 
             composable(route = "takephoto") {
