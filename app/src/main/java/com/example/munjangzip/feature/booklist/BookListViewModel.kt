@@ -1,17 +1,20 @@
 package com.example.munjangzip.feature.booklist
 
 import android.util.Log
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.munjangzip.data.UserPreferences
 import com.example.munjangzip.feature.category.GetCategoryRepository
 import com.example.munjangzip.feature.category.GetCategoryResponse
 import com.example.munjangzip.feature.savebook.GetBookRepository
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +22,7 @@ import javax.inject.Inject
 class BookListViewModel @Inject constructor(
     private val repository: GetCategoryRepository,
     private val bookRepository: BookRepository,
+
     private val userPreferences: UserPreferences
 ) : ViewModel() {
 
@@ -111,5 +115,6 @@ class BookListViewModel @Inject constructor(
         }
 
     }
+
 
 }

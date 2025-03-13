@@ -36,6 +36,7 @@ import com.example.munjangzip.ui.theme.BrightYellow
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookListScreen(navController: NavController, viewModel: BookListViewModel = hiltViewModel(), categoryId: Int) {
+
     val userState by viewModel.userState.collectAsState()
 
     Scaffold(

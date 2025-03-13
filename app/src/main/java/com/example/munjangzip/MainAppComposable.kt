@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+
 import com.example.munjangzip.data.UserPreferences
 import com.example.munjangzip.feature.booklist.BookListScreen
 import com.example.munjangzip.feature.category.CategoryScreen
@@ -29,6 +30,7 @@ import com.example.munjangzip.feature.selectMemo.SelectMemo
 import com.example.munjangzip.feature.createMemo.CreateMemoPic
 import com.example.munjangzip.feature.auth.signin.SignInViewModel
 import com.example.munjangzip.feature.booklist.BookListViewModel
+
 import com.example.munjangzip.feature.savebook.GetBookViewModel
 
 @Composable
@@ -40,6 +42,7 @@ fun MainApp(userPreferences: UserPreferences) {
 
         val bookViewModel: GetBookViewModel = hiltViewModel() //공유 뷰모델로 바코드 인식후 bookinfo페이지와 뷰모델 데이터 공유
         val bookInfoViewModel: BookListViewModel = hiltViewModel()
+
 
         // UserPreferences에서 저장된 accessToken 확인
         val accessToken by userPreferences.accessToken.collectAsState(initial = null)
@@ -95,6 +98,7 @@ fun MainApp(userPreferences: UserPreferences) {
             ) { backStackEntry ->
                 val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
                 TakePhotoPage(navController = navController, bookViewModel, categoryId = categoryId)
+
             }
 
 
@@ -123,6 +127,7 @@ fun MainApp(userPreferences: UserPreferences) {
                     categoryId = categoryId,
                     bookInfoViewModel = bookInfoViewModel
                 )
+
             }
 
 

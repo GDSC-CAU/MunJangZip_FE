@@ -53,6 +53,7 @@ import com.example.munjangzip.ui.theme.Ivory
 
 @Composable
 fun TakePhotoPage(navController: NavController, viewModel: GetBookViewModel = hiltViewModel(), categoryId: Int) {
+
     val context = LocalContext.current
     var isScanning by remember { mutableStateOf(false) }  // 바코드 스캔 여부
     var isLoading by remember { mutableStateOf(false) }   // API 로딩 상태
@@ -63,6 +64,7 @@ fun TakePhotoPage(navController: NavController, viewModel: GetBookViewModel = hi
     LaunchedEffect(Unit) {
         Log.d("TakePhotoPage", "전달된 categoryId: $categoryId")
     }
+
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -169,6 +171,7 @@ fun TakePhotoPage(navController: NavController, viewModel: GetBookViewModel = hi
                 //navController.currentBackStackEntry?.savedStateHandle?.set("isbn_key", stringIsbn )
                 //navController.navigate("bookInfo")
                 navController.navigate("bookInfo/${categoryId}")
+
 
 
             } ?: run {

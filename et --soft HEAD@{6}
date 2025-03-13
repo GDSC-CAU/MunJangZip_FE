@@ -1,0 +1,88 @@
+[33m4dc4261[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~9
+[33mb9be1ab[m HEAD@{1}: commit (merge): 충돌 해결
+[33m51c02fd[m HEAD@{2}: reset: moving to HEAD
+[33m51c02fd[m HEAD@{3}: rebase (finish): returning to refs/heads/main
+[33m51c02fd[m HEAD@{4}: rebase (start): checkout HEAD~2
+[33m51c02fd[m HEAD@{5}: rebase (finish): returning to refs/heads/main
+[33m51c02fd[m HEAD@{6}: rebase (pick): feat: 유저 이름,도서관 불러오기
+[33mf7fd47d[m HEAD@{7}: rebase (pick): feat: 메인화면 연결 완전끝
+[33mfc88f5d[m HEAD@{8}: rebase (pick): feat: 엑세스 토큰 재발급 & 카테고리 화면보기
+[33md01322e[m HEAD@{9}: rebase (pick): feat: 카테고리 추가 성공시 메인화면 이동
+[33mda9793a[m HEAD@{10}: rebase (pick): feat: 카테고리 추가 및 토큰 분리
+[33m55ff2e3[m HEAD@{11}: rebase (pick): feat: 로그인 연결
+[33mb192dd7[m HEAD@{12}: rebase (start): checkout HEAD~3
+[33m55b9001[m HEAD@{13}: checkout: moving from feature/regBook to main
+[33m2ead691[m[33m ([m[1;31morigin/feature/regBook[m[33m, [m[1;32mfeature/regBook[m[33m)[m HEAD@{14}: commit: base url 제거 후 새 커밋
+[33m55b9001[m HEAD@{15}: reset: moving to HEAD~6
+[33m6b13154[m HEAD@{16}: rebase (finish): returning to refs/heads/feature/regBook
+[33m6b13154[m HEAD@{17}: rebase (start): checkout HEAD~6
+[33m6b13154[m HEAD@{18}: rebase (finish): returning to refs/heads/feature/regBook
+[33m6b13154[m HEAD@{19}: rebase (start): checkout feature/regBook
+[33m6b13154[m HEAD@{20}: checkout: moving from feature/uploadBook to feature/regBook
+[33m6b13154[m HEAD@{21}: checkout: moving from feature/regBook to feature/uploadBook
+[33m6b13154[m HEAD@{22}: commit: minor update
+[33m0cba1c3[m[33m ([m[1;31morigin/feature/addBook[m[33m, [m[1;32mfeature/addBook[m[33m)[m HEAD@{23}: checkout: moving from feature/addBook to feature/regBook
+[33m0cba1c3[m[33m ([m[1;31morigin/feature/addBook[m[33m, [m[1;32mfeature/addBook[m[33m)[m HEAD@{24}: commit: 카테고리별로 북리스트 화면 라우팅 구현
+[33ma977527[m HEAD@{25}: commit: feat 북 리스트 그리드 서버에서 가져오기
+[33m2317a90[m HEAD@{26}: commit: 책 등록 구현중
+[33m3b1d244[m HEAD@{27}: commit: 바코드 인식해서 책 데이터 불러오기
+[33m5a27103[m HEAD@{28}: commit: 로그인상태기억해서 바로 매인화면 진입
+[33m55b9001[m HEAD@{29}: checkout: moving from main to feature/addBook
+[33m55b9001[m HEAD@{30}: pull origin main: Fast-forward
+[33mac8106b[m HEAD@{31}: pull origin main: Fast-forward
+[33mb192dd7[m HEAD@{32}: pull origin main: Fast-forward
+[33mabe4d77[m HEAD@{33}: checkout: moving from feature/signup to main
+[33mda4671c[m[33m ([m[1;32mfeature/signup[m[33m)[m HEAD@{34}: commit: 데이터 모델 작성 연습
+[33m6ec1a61[m[33m ([m[1;31morigin/feature/signup[m[33m)[m HEAD@{35}: commit: FEAT 로그인 페이지 구현
+[33m616f2a2[m HEAD@{36}: commit: FEAT: 스타트 스크린 구현
+[33m8d63492[m HEAD@{37}: commit: UI: 텍스트 필드 색상 적용
+[33mb19bb37[m HEAD@{38}: commit: 회원가입 페이지 수정
+[33mabe4d77[m HEAD@{39}: checkout: moving from main to feature/signup
+[33mabe4d77[m HEAD@{40}: checkout: moving from feature/signin to main
+[33m34bfb70[m HEAD@{41}: commit (merge): 깃 충돌
+[33m59c6d83[m HEAD@{42}: commit: stash 처리
+[33m29f0dc4[m HEAD@{43}: checkout: moving from main to feature/signin
+[33mabe4d77[m HEAD@{44}: checkout: moving from feature/signin to main
+[33m29f0dc4[m HEAD@{45}: commit: signup screen 텍스트 필드 적용
+[33m1055a82[m HEAD@{46}: checkout: moving from main to feature/signin
+[33mabe4d77[m HEAD@{47}: reset: moving to HEAD
+[33mabe4d77[m HEAD@{48}: checkout: moving from main to main
+[33mabe4d77[m HEAD@{49}: pull origin main: Fast-forward
+[33m5b66ff3[m HEAD@{50}: checkout: moving from feature/signin to main
+[33m1055a82[m HEAD@{51}: commit: 로그인 및 회원가입 화면 기본 틀 구성
+[33mf30b5b0[m[33m ([m[1;31morigin/feature/barcode[m[33m, [m[1;32mfeature/barcode[m[33m)[m HEAD@{52}: checkout: moving from feature/barcode to feature/signin
+[33mf30b5b0[m[33m ([m[1;31morigin/feature/barcode[m[33m, [m[1;32mfeature/barcode[m[33m)[m HEAD@{53}: commit: UI: ui 수정
+[33mbd805df[m HEAD@{54}: commit: 바코드 촬영 화면 구현
+[33m5b66ff3[m HEAD@{55}: checkout: moving from main to feature/barcode
+[33m5b66ff3[m HEAD@{56}: pull origin main: Fast-forward
+[33mc4e7b5e[m HEAD@{57}: checkout: moving from feature/category to main
+[33m01edf15[m[33m ([m[1;31morigin/feature/category[m[33m, [m[1;32mfeature/category[m[33m)[m HEAD@{58}: commit: booklistscreen topbbar 수정
+[33m17585ca[m HEAD@{59}: commit: 충돌해결,TopBarWidget 적용
+[33m7971082[m HEAD@{60}: commit (merge): 충돌해결
+[33ma1b966c[m HEAD@{61}: checkout: moving from main to feature/category
+[33mc4e7b5e[m HEAD@{62}: pull origin main: Fast-forward
+[33mb42f9de[m HEAD@{63}: checkout: moving from feature/category to main
+[33ma1b966c[m HEAD@{64}: commit: navigation추가, topappbar 를 topbarwidget으로 분리해서 저장
+[33me507d97[m HEAD@{65}: merge main: Merge made by the 'ort' strategy.
+[33m1ab528b[m HEAD@{66}: checkout: moving from main to feature/category
+[33mb42f9de[m HEAD@{67}: pull origin main: Fast-forward
+[33m701be4d[m HEAD@{68}: checkout: moving from feature/category to main
+[33m1ab528b[m HEAD@{69}: checkout: moving from main to feature/category
+[33m701be4d[m HEAD@{70}: checkout: moving from feature/category to main
+[33m1ab528b[m HEAD@{71}: commit: 시작 라우팅 페이지 변경
+[33me8c3c8b[m HEAD@{72}: commit: 마이너 업데이트
+[33m2ef8dd3[m HEAD@{73}: checkout: moving from feature/addCate to feature/category
+[33m7e3b3c7[m[33m ([m[1;32mfeature/addCate[m[33m)[m HEAD@{74}: checkout: moving from main to feature/addCate
+[33m701be4d[m HEAD@{75}: checkout: moving from feature/category to main
+[33m2ef8dd3[m HEAD@{76}: commit: 책등록 화면 생성
+[33ma4203d7[m HEAD@{77}: commit: 오타수정
+[33me3ca352[m HEAD@{78}: commit: fun BookCategoryPager(), Background() 분리
+[33m09cf7b8[m HEAD@{79}: checkout: moving from main to feature/category
+[33m701be4d[m HEAD@{80}: pull origin main: Fast-forward
+[33m018eb94[m HEAD@{81}: checkout: moving from feature/category to main
+[33m09cf7b8[m HEAD@{82}: commit: 가로 slide 카테고리 이미지 구현
+[33mb39f9d0[m HEAD@{83}: commit: create category page
+[33m018eb94[m HEAD@{84}: checkout: moving from main to feature/category
+[33m018eb94[m HEAD@{85}: pull origin main: Fast-forward
+[33m2d385b2[m HEAD@{86}: pull origin main: Fast-forward
+[33m06f19db[m HEAD@{87}: commit (initial): signin page, hilt viewmodel

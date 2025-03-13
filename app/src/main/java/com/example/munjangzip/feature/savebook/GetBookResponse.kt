@@ -8,6 +8,7 @@ data class GetBookResponse(
 )
 
 data class GetBookResult(
+
     val memberId: Int,
     val bookId: Int,
     val title: String,

@@ -59,6 +59,7 @@ fun BookCategoryPager(navController: NavController, categories: List<CategoryIte
                     alpha = lerp(0.5f, 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f))
                 }
                 .clickable { navController.navigate("booklist/${category.categoryId}") },
+
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp), //그림자 없애고
             colors = CardDefaults.cardColors(containerColor = Color.Black) // 완전 블랙으로

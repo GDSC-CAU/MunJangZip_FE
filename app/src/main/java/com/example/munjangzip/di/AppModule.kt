@@ -25,6 +25,7 @@ import com.example.munjangzip.feature.category.GetCategoryApi
 import com.example.munjangzip.feature.category.GetCategoryRepository
 import com.example.munjangzip.feature.savebook.BarCodeApi
 import com.example.munjangzip.feature.savebook.GetBookRepository
+
 import com.example.munjangzip.network.AuthApi
 
 @Module
@@ -84,6 +85,7 @@ object AppModule {
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("ㅎㅎㅎ") // 백엔드 주소
+
             .client(client) // OkHttpClient 적용
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -170,6 +172,7 @@ object AppModule {
     fun provideBookRepository(api: BookApi, userPreferences: UserPreferences): BookRepository {
         return BookRepository(api, userPreferences)
     }
+
 
 
 }

@@ -43,6 +43,7 @@ import coil.request.ImageRequest
 import com.example.munjangzip.R
 import com.example.munjangzip.appbar.TopBarWidget
 import com.example.munjangzip.feature.booklist.BookListViewModel
+
 import com.example.munjangzip.feature.savebook.GetBookViewModel
 import com.example.munjangzip.feature.savebook.startMLKitScanner
 import com.example.munjangzip.ui.BackGroundBubble
@@ -50,6 +51,7 @@ import com.example.munjangzip.ui.theme.Gray10
 
 @Composable
 fun LoadBookInfoScreen(navController: NavController, viewModel: GetBookViewModel = hiltViewModel(), categoryId:Int, bookInfoViewModel: BookListViewModel = hiltViewModel()) {
+
     val loadBookState by viewModel.bookState.collectAsState()
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -57,6 +59,7 @@ fun LoadBookInfoScreen(navController: NavController, viewModel: GetBookViewModel
     LaunchedEffect(Unit) {
         Log.d("LoadBookInfoScreen", "받은 categoryId: $categoryId")
     }
+
     // savedStateHandle에서 ISBN 가져오기
     val isbn = navController.previousBackStackEntry?.savedStateHandle?.get<String>("isbn_key") ?: ""
 
