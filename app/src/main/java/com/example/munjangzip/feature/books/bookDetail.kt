@@ -28,7 +28,6 @@ import androidx.compose.ui.util.lerp
 import com.example.munjangzip.feature.booklist.BookListViewModel
 import com.example.munjangzip.feature.booklist.Paragraph
 
-
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookListViewModel = hiltViewModel()) {
@@ -66,7 +65,7 @@ fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookL
                     AsyncImage(
                         model = bookDetail.coverImageUrl,
                         contentDescription = "책 표지",
-                        contentScale = ContentScale.Fit, // 가로 비율 유지
+                        contentScale = ContentScale.Fit,
                         modifier = Modifier
                             .height(320.dp)
                             .wrapContentWidth()
@@ -88,7 +87,6 @@ fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookL
                             else -> R.drawable.memo_default_background
                         }
 
-                        //메모 크기조정 여기서
                         Surface(
                             shape = RoundedCornerShape(20.dp),
                             shadowElevation = 8.dp,
@@ -101,40 +99,51 @@ fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookL
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier.fillMaxSize()
                                 )
-                                Column(
-                                    modifier = Modifier.padding(20.dp).fillMaxSize(),
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    //메모 이미지 있으면 이미지표시, 없으면 content 표시
-                                    if (!paragraph.imageUrl.isNullOrEmpty()) {
-                                        AsyncImage(
-                                            model = paragraph.imageUrl,
-                                            contentDescription = "메모 이미지",
-                                            modifier = Modifier.fillMaxWidth(0.8f).height(140.dp).clip(RoundedCornerShape(10.dp))
-                                        )
-                                    } else if (!paragraph.content.isNullOrEmpty()) {
-                                        Text(
-                                            text = paragraph.content,
-                                            fontSize = 14.sp,
-                                            textAlign = TextAlign.Center,
-                                            color = Color.DarkGray
-                                        )
-                                    }
-                                    //기본 배경일 경우 작성일 표시 x
-                                    if (bgColor != R.drawable.memo_default_background) {
-                                        Text(
-                                            text = "작성일 : ${paragraph.create_at}",
-                                            fontSize = 12.sp,
-                                            color = Color.Gray,
-                                            textAlign = TextAlign.End,
-                                            modifier = Modifier.fillMaxWidth()
-                                        )
+                                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    Column(
+                                        modifier = Modifier.padding(20.dp).fillMaxSize(),
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        val isValidContent = !paragraph.content.isNullOrEmpty() && paragraph.content != "string"
+                                        val isValidImage = !paragraph.imageUrl.isNullOrEmpty() && paragraph.imageUrl != "string"
+
+                                        if (isValidContent) {
+                                            Text(
+                                                text = paragraph.content!!,
+                                                fontSize = 14.sp,
+                                                textAlign = TextAlign.Center,
+                                                color = Color.DarkGray
+                                            )
+                                        }
+
+                                        if (isValidImage) {
+                                            AsyncImage(
+                                                model = paragraph.imageUrl,
+                                                contentDescription = "메모 이미지",
+                                                modifier = Modifier
+                                                    .height(120.dp)
+                                                    .clip(RoundedCornerShape(10.dp))
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.weight(1f))
+
+                                        // 작성일은 컨텐츠나 이미지가 있을 경우 항상 표시
+                                        if (isValidContent || isValidImage) {
+                                            Text(
+                                                text = "작성일 : ${paragraph.create_at}",
+                                                fontSize = 12.sp,
+                                                color = Color.Gray,
+                                                textAlign = TextAlign.End,
+                                                modifier = Modifier.fillMaxWidth()
+                                            )
+                                        }
                                     }
                                 }
+
                             }
                         }
                     }
-                    //페이지 인디케이터
                     HorizontalPagerIndicator(
                         pagerState = rememberPagerState(),
                         modifier = Modifier.align(Alignment.CenterHorizontally).padding(8.dp),
@@ -143,7 +152,6 @@ fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookL
                     )
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    // 메모하기 버튼
                     Button(
                         onClick = { navController.navigate("selectMemo") },
                         modifier = Modifier.width(110.dp).height(40.dp).clip(RoundedCornerShape(10.dp)),

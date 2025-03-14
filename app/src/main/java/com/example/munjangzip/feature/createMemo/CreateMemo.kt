@@ -168,7 +168,7 @@ fun CreateMemo(navController: NavController) {
                     }
                 }
 
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(70.dp))
 
                 // 저장 버튼
                 Button(
