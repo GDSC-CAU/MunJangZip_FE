@@ -52,7 +52,7 @@ class AuthInterceptor @Inject constructor(
         }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://dddd/")
+            .baseUrl("http://ss/")
 
             .addConverterFactory(GsonConverterFactory.create())
             .build()

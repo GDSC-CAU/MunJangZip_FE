@@ -131,7 +131,7 @@ fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookL
                                         // 작성일은 컨텐츠나 이미지가 있을 경우 항상 표시
                                         if (isValidContent || isValidImage) {
                                             Text(
-                                                text = "작성일 : ${paragraph.create_at}",
+                                                text = "작성일 : ${paragraph.createdAt}",
                                                 fontSize = 12.sp,
                                                 color = Color.Gray,
                                                 textAlign = TextAlign.End,

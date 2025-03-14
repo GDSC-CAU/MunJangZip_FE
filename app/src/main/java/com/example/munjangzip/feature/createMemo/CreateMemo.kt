@@ -222,8 +222,8 @@ class CreateMemoViewModel @Inject constructor(
     ) {
         val colorCode = when (selectedColor) {
             Color(0xFFFFF2D3) -> 1
-            Color(0xFFFDEDED) -> 2
-            Color(0xFFE0E0E0) -> 3
+            Color(0xFFFDEDED) -> 3
+            Color(0xFFE0E0E0) -> 2
             Color(0xFFE5EFFD) -> 4
             Color(0xFFE2F5E2) -> 5
             else -> 1
