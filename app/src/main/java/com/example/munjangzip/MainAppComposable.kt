@@ -113,11 +113,7 @@ fun MainApp(userPreferences: UserPreferences) {
                 BookDetailScreen(navController = navController, bookId = bookId)
             }
 
-            //바코드로 찍은 책을 불러와서 등록하는 페이지 네비게이션
-//            composable(route = "bookInfo/") { backStackEntry ->
-//                val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
-//                LoadBookInfoScreen(navController = navController, bookViewModel, categoryId = categoryId, bookInfoViewModel)
-//            }
+
 
             composable(route = "bookInfo/{categoryId}") { backStackEntry ->
                 val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull() ?: 1
