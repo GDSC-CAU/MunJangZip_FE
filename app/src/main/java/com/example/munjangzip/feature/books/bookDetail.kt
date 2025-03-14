@@ -129,15 +129,18 @@ fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookL
                                         Spacer(modifier = Modifier.weight(1f))
 
                                         // 작성일은 컨텐츠나 이미지가 있을 경우 항상 표시
+                                
                                         if (isValidContent || isValidImage) {
+                                            val formattedDate = paragraph.createdAt?.split("T")?.get(0) ?: "날짜 없음" // "2025-03-14"만 추출
                                             Text(
-                                                text = "작성일 : ${paragraph.createdAt}",
+                                                text = "작성일 : $formattedDate",
                                                 fontSize = 12.sp,
                                                 color = Color.Gray,
                                                 textAlign = TextAlign.End,
                                                 modifier = Modifier.fillMaxWidth()
                                             )
                                         }
+
                                     }
                                 }
 
