@@ -46,6 +46,6 @@ data class Paragraph(
     val paragraph_id: Int,
     val content: String?,
     val color: Int,
-    val create_at: String,
+    val createdAt: String,
     val imageUrl: String?
 )
