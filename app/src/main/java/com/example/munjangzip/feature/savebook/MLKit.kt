@@ -9,6 +9,8 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 
 fun Activity.startMLKitScanner(onScanned: (String) -> Unit) {
+    Log.d("MLKitScanner", "startMLKitScanner 실행됨") // ✅ 함수가 실행되는지 확인
+
     val options = GmsBarcodeScannerOptions.Builder()
         .setBarcodeFormats(
             Barcode.FORMAT_QR_CODE,

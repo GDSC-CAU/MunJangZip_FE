@@ -134,6 +134,7 @@ fun TakePhotoPage(navController: NavController, viewModel: GetBookViewModel = hi
             Spacer(modifier = Modifier.padding(8.dp))
             ElevatedButton(
                 onClick = {
+                    Log.d("MLKitScanner", "바코드 스캐너 실행 버튼 클릭됨") // ✅ 로그 추가
                     (context as? Activity)?.startMLKitScanner { scannedIsbn ->
                         isScanning = false  //  스캔 완료
                         isLoading = true    //  데이터 로딩 시작

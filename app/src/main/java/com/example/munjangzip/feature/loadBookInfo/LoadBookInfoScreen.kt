@@ -124,6 +124,13 @@ fun LoadBookInfoScreen(navController: NavController, viewModel: GetBookViewModel
                         isbn = isbn
                     );
                         Log.e("LoadBookInfo", "$categoryId")
+//                        navController.navigate("booklist/$categoryId")
+                        navController.navigate("booklist/$categoryId"){
+                            popUpTo("category") { inclusive = false } // "category" 화면을 남기고 스택에서 제거
+                            launchSingleTop = true // 중복 방지
+                        }
+
+
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.White,

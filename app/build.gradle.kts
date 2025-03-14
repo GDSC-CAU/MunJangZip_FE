@@ -80,7 +80,7 @@ dependencies {
     //바코드 스캔을 위한 ML KIT
     implementation (libs.barcode.scanning)
 
-    implementation (libs.play.services.code.scanner)
+    implementation ("com.google.android.gms:play-services-code-scanner:16.1.0")
 
 
     // 레트로핏
