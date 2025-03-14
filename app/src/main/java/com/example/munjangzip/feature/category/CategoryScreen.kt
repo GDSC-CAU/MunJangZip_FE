@@ -141,7 +141,11 @@ fun CategoryScreen(navController: NavController, viewModel: CategoryViewModel = 
 
             //카테고리 리스트-> BookCategoryPager에 전달
             categoryState?.result?.categoryList?.let { categories ->
-                BookCategoryPager(navController, categories)
+                BookCategoryPager(
+                    navController = navController,
+                    categories = categories,
+                    refreshCallback = { viewModel.fetchCategories()}// ✅ API 재요청 추가
+                )
             }
             Spacer(modifier = Modifier.padding(13.dp))
         }
