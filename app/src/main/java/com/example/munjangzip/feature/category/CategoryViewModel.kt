@@ -23,7 +23,7 @@ class CategoryViewModel @Inject constructor(
         fetchCategories()
     }
 
-    private fun fetchCategories() {
+    public fun fetchCategories() {
         viewModelScope.launch {
             try {
                 val response = repository.getCategories()
