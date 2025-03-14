@@ -32,3 +32,20 @@ data class BooksResult(
     val title: String,
     val author: String
 )
+
+data class BookDetailResult(
+    val title: String,
+    val author: String,
+    val coverImageUrl: String,
+    val category: String,
+    val paragraph: List<Paragraph>,
+    val isbn: String
+)
+
+data class Paragraph(
+    val paragraph_id: Int,
+    val content: String?,
+    val color: Int,
+    val create_at: String,
+    val imageUrl: String?
+)

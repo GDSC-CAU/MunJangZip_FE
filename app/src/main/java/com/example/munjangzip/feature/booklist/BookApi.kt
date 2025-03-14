@@ -22,4 +22,12 @@ interface BookApi {
         @Header("Authorization") accessToken: String,
         @Path("categoryId") categoryId: Int
     ): Response<BookResponse<BookListResult>>
+
+    //책 상세정보
+    @GET("book/detail/{bookId}")
+    suspend fun getBookDetail(
+        @Header("Authorization") accessToken: String,
+        @Path("bookId") bookId: Int
+    ): Response<BookResponse<BookDetailResult>>
+
 }
