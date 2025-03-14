@@ -24,6 +24,7 @@ import com.example.munjangzip.feature.booklist.BookRepository
 import com.example.munjangzip.feature.category.GetCategoryApi
 import com.example.munjangzip.feature.category.GetCategoryRepository
 import com.example.munjangzip.feature.createMemo.MemoApiService
+import com.example.munjangzip.feature.createMemo.MemoImageApiService
 import com.example.munjangzip.feature.savebook.BarCodeApi
 import com.example.munjangzip.feature.savebook.GetBookRepository
 
@@ -84,7 +85,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://ㅇㅇㅇㅇ/") // 백엔드 주소
+            .baseUrl("http://ㅇㅇㅇ/") // 백엔드 주소
 
             .client(client) // OkHttpClient 적용
             .addConverterFactory(GsonConverterFactory.create())
@@ -180,5 +181,15 @@ object AppModule {
     fun provideMemoApiService(retrofit: Retrofit): MemoApiService{
         return retrofit.create(MemoApiService::class.java)
     }
+
+    //메모 이미지 업로드
+    @Provides
+    @Singleton
+    fun provideMemoImageApiService(retrofit: Retrofit): MemoImageApiService {
+        return retrofit.create(MemoImageApiService::class.java)
+    }
+
+
+
 
 }

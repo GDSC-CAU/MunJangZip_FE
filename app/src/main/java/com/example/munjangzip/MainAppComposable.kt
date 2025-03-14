@@ -142,7 +142,7 @@ fun MainApp(userPreferences: UserPreferences) {
                 CreateMemo(navController = navController, bookId = bookId)
             }
 
-// SelectMemo 페이지 네비게이션 (bookId 포함)
+            // SelectMemo 페이지 네비게이션 (bookId 포함)
             composable(
                 route = "selectMemo?bookId={bookId}",
                 arguments = listOf(navArgument("bookId") { type = NavType.IntType })
@@ -151,9 +151,18 @@ fun MainApp(userPreferences: UserPreferences) {
                 SelectMemo(navController = navController, bookId = bookId)
             }
 
-            composable("createMemoPic") {
-                CreateMemoPic(navController = navController)
+            // CreateMemoPic 페이지 네비게이션 (bookId 포함)
+            composable(
+                route = "createMemoPic?bookId={bookId}",
+                arguments = listOf(navArgument("bookId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val bookId = backStackEntry.arguments?.getInt("bookId") ?: 0
+                CreateMemoPic(navController = navController, bookId = bookId)
             }
+
+
+
+
 
 
         }

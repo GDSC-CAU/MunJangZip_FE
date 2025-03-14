@@ -64,7 +64,7 @@ fun SelectMemo(navController: NavController, bookId : Int) {
                     text = "사진 추가하기",
                     color = Color(0xFFE5EFFD),
                     fishIcon = R.drawable.fish_blue,
-                    onClick = { navController.navigate("createMemoPic") }
+                    onClick = { navController.navigate("createMemoPic?bookId=$bookId") }
                 )
 
                 Spacer(modifier = Modifier.padding(25.dp))
