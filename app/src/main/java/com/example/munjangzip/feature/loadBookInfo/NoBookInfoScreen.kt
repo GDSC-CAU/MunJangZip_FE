@@ -43,7 +43,7 @@ import com.example.munjangzip.ui.BackGroundBubble
 import com.example.munjangzip.ui.theme.Gray10
 
 @Composable
-fun NoBookInfoScreen(navController: NavController, viewModel: GetBookViewModel = hiltViewModel()) {
+fun NoBookInfoScreen(navController: NavController, viewModel: GetBookViewModel = hiltViewModel(), categoryId : Int) {
     val context = LocalContext.current
 //    var isScanning by remember { mutableStateOf(false) }  // 바코드 스캔 여부
 //    var isLoading by remember { mutableStateOf(false) }   // API 로딩 상태
@@ -66,53 +66,50 @@ fun NoBookInfoScreen(navController: NavController, viewModel: GetBookViewModel =
             ) {
                 Spacer(modifier = Modifier.padding(8.dp))
 
-                    Card(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .size(width = 250. dp, height = 420.dp)
+                Card(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(width = 250.dp, height = 420.dp)
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
+                        Image(
                             modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ){
-                            Image(
-                                modifier = Modifier.fillMaxSize(),
-                                painter = painterResource(R.drawable.nobook),
-                                contentDescription = "Loaded Book",
-                                contentScale = ContentScale.Crop,
+                            painter = painterResource(R.drawable.nobook),
+                            contentDescription = "Loaded Book",
+                            contentScale = ContentScale.Crop,
+                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 120.dp, start = 20.dp, end = 20.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "도서관에 책이\n없나봐요!!",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+
                             )
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(top = 120.dp, start = 20.dp, end = 20.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = "도서관에 책이\n없나봐요!!",
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center
-
-                                )
-                            }
                         }
-
                     }
+
+                }
 
 
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 ElevatedButton(
                     onClick = {
-//                        (context as? Activity)?.startMLKitScanner { scannedIsbn ->
-//                            isScanning = false  // ✅ 스캔 완료
-//                            isLoading = true    // ✅ 데이터 로딩 시작
-//                            Log.d("TakePhotoPage", "바코드 스캔 완료: $scannedIsbn")
-//
-//                            // ISBN이 정상적으로 스캔되면 ViewModel에서 API 호출
-//                            viewModel.fetchBooks(scannedIsbn)
-//                        }
+                        Log.d("NoBookInfoScreen", "다시찍기 버튼 클릭됨")
+                        (context as? Activity)?.startMLKitScanner { scannedIsbn ->
+                            Log.d("NoBookInfoScreen", "바코드 스캔 완료: $scannedIsbn")
+                            viewModel.fetchBooks(scannedIsbn) // ✅ API 요청
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.White,
@@ -146,5 +143,14 @@ fun NoBookInfoScreen(navController: NavController, viewModel: GetBookViewModel =
 //            }
 //        }
 //    }
+    LaunchedEffect(loadBookState) {
+        loadBookState?.result?.title?.let {
+            Log.d("NoBookInfoScreen", "책 정보 로드 성공: $it")
+            navController.navigate("bookInfo/${categoryId}")
+        } ?: run {
+            Log.e("NoBookInfoScreen", "책 정보 불러오기 실패: 응답이 null")
+            navController.navigate("noBookInfo/${categoryId}")
+        }
 
+    }
 }
