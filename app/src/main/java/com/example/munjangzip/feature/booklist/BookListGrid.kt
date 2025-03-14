@@ -189,7 +189,7 @@ fun BookListGrid(navController: NavController, viewModel: BookListViewModel, cat
                             .size(width = 100.dp, height = 160.dp)
                     ) {
                         Image(
-                            painter = painterResource(addbook),
+                            painter = painterResource(R.drawable.addbook),
                             contentDescription = "책 추가 버튼",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.clickable {
