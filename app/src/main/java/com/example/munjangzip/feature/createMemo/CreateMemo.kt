@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -19,22 +20,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.munjangzip.R
-import com.example.munjangzip.ui.BackGroundBubble
-import androidx.compose.ui.draw.clip
 import com.example.munjangzip.appbar.TopBarWidget
+import com.example.munjangzip.ui.BackGroundBubble
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 val LightYellow = Color(0xFFFFF2D3)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateMemo(navController: NavController) {
-
+fun CreateMemo(
+    navController: NavController,
+    bookId: Int // 책 ID 전달
+) {
     var selectedColor by remember { mutableStateOf(Color(0xFFFFF2D3)) }  // base 색상
     var memoText by remember { mutableStateOf("") }
+    val viewModel: CreateMemoViewModel = hiltViewModel()
+    val scope = rememberCoroutineScope()
 
-    // selectedColor 에 따라서 배경 이미지 바꾸기(절때 변경 xx)
+    // selectedColor 에 따라서 배경 이미지 바꾸기(절대 변경하지 않음)
     val memoBackground = when (selectedColor) {
         Color(0xFFFFF2D3) -> R.drawable.memo_background1  // 노란색
         Color(0xFFFDEDED) -> R.drawable.memo_background2  // 분홍색
@@ -46,24 +56,22 @@ fun CreateMemo(navController: NavController) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-                topBar = {
+        topBar = {
             TopBarWidget(navController = navController)
         }
-
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
+            // 뒤 배경
             BackGroundBubble(R.drawable.bubble2)
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
+                // "바로 글쓰기" 표시부분
                 Box(contentAlignment = Alignment.Center) {
-                    // 붕어빵 아이콘
-
-                    // "바로 글쓰기" 부분
                     Surface(
                         shape = RoundedCornerShape(20.dp),
                         color = LightYellow,
@@ -112,7 +120,7 @@ fun CreateMemo(navController: NavController) {
                         placeholder = {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center  // placeholder를 가운데 정렬
+                                contentAlignment = Alignment.Center
                             ) {
                                 Text("눌러서 입력하기", color = Color.Gray)
                             }
@@ -146,9 +154,9 @@ fun CreateMemo(navController: NavController) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     val colors = listOf(
-                        Color(0xFFFFF2D3),  // 베이지
-                        Color(0xFFE0E0E0),  // 연회색
-                        Color(0xFFFDEDED),  // 핑크
+                        Color(0xFFFFF2D3),  // 노란색
+                        Color(0xFFFDEDED),  // 분홍색
+                        Color(0xFFE0E0E0),  // 회색
                         Color(0xFFE5EFFD),  // 하늘색
                         Color(0xFFE2F5E2)   // 연두색
                     )
@@ -167,12 +175,19 @@ fun CreateMemo(navController: NavController) {
                         )
                     }
                 }
-
-                Spacer(modifier = Modifier.padding(70.dp))
-
                 // 저장 버튼
                 Button(
-                    onClick = { /* 저장 기능 추가하기 */ },
+                    onClick = {
+                        scope.launch {
+                            viewModel.saveMemo(
+                                bookId = bookId,
+                                content = memoText,
+                                selectedColor = selectedColor,
+                                navController = navController
+                                    // popBackStack
+                            )
+                        }
+                    },
                     modifier = Modifier
                         .width(130.dp)
                         .height(50.dp)
@@ -188,6 +203,48 @@ fun CreateMemo(navController: NavController) {
                         color = Color.Gray
                     )
                 }
+            }
+        }
+    }
+}
+
+
+@HiltViewModel
+class CreateMemoViewModel @Inject constructor(
+    private val memoApi: MemoApiService
+) : ViewModel() {
+
+    fun saveMemo(
+        bookId: Int,
+        content: String,
+        selectedColor: Color,
+        navController: NavController // 네비게이션 컨트롤러 추가
+    ) {
+        val colorCode = when (selectedColor) {
+            Color(0xFFFFF2D3) -> 1
+            Color(0xFFFDEDED) -> 2
+            Color(0xFFE0E0E0) -> 3
+            Color(0xFFE5EFFD) -> 4
+            Color(0xFFE2F5E2) -> 5
+            else -> 1
+        }
+
+        val request = MemoRequest(
+            bookId = bookId,
+            paragraph = Paragraph(
+                content = content,
+                imageURL = null,  // 이미지 URL 없음
+                color = colorCode
+            )
+        )
+
+        viewModelScope.launch {
+            val response = memoApi.createMemo(request)
+            if (response.isSuccess) {
+                //성공하면 이전 화면으로 돌아가기
+                navController.popBackStack()
+            } else {
+                // 실패 시 처리
             }
         }
     }
