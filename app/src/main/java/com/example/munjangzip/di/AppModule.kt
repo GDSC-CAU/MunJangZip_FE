@@ -23,6 +23,7 @@ import com.example.munjangzip.feature.booklist.BookApi
 import com.example.munjangzip.feature.booklist.BookRepository
 import com.example.munjangzip.feature.category.GetCategoryApi
 import com.example.munjangzip.feature.category.GetCategoryRepository
+import com.example.munjangzip.feature.createMemo.MemoApiService
 import com.example.munjangzip.feature.savebook.BarCodeApi
 import com.example.munjangzip.feature.savebook.GetBookRepository
 
@@ -39,7 +40,6 @@ object AppModule {
     fun provideAuthApi(retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
     }
-
 
     //UserPreferences Hilt에 제공
     @Provides
@@ -85,7 +85,6 @@ object AppModule {
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("http://ㅇㅇㅇㅇ/") // 백엔드 주소
-
             .client(client) // OkHttpClient 적용
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -174,5 +173,11 @@ object AppModule {
     }
 
 
+    //메모 작성(글쓰기)
+    @Provides
+    @Singleton
+    fun provideMemoApiService(retrofit: Retrofit): MemoApiService{
+        return retrofit.create(MemoApiService::class.java)
+    }
 
 }

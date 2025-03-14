@@ -32,7 +32,7 @@ import com.example.munjangzip.appbar.TopBarWidget
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectMemo(navController: NavController) {
+fun SelectMemo(navController: NavController, bookId : Int) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -55,7 +55,7 @@ fun SelectMemo(navController: NavController) {
                     text = "바로 글쓰기",
                     color = Color(0xFFFFF2D3),
                     fishIcon = R.drawable.fish,
-                    onClick = { navController.navigate("createMemo") }
+                    onClick = { navController.navigate("createMemo?bookId=$bookId") }
                 )
 
                 Spacer(modifier = Modifier.padding(25.dp))
