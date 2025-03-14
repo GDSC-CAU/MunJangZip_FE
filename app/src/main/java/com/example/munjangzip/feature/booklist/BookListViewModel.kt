@@ -115,6 +115,17 @@ class BookListViewModel @Inject constructor(
         }
 
     }
+    //책 상세조회
+    private val _bookDetailState = MutableStateFlow<BookResponse<BookDetailResult>?>(null)
+    val bookDetailState: StateFlow<BookResponse<BookDetailResult>?> = _bookDetailState.asStateFlow()
+
+    fun fetchBookDetail(bookId: Int) {
+        viewModelScope.launch {
+            _bookDetailState.value = bookRepository.getBookDetail(bookId)
+        }
+    }
+
+
 
 
 }
