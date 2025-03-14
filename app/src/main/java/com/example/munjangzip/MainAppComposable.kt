@@ -128,8 +128,11 @@ fun MainApp(userPreferences: UserPreferences) {
 
 
             //바코드로 인식한 책의 정보를 불러올 수 없을 때 네비게이션
-            composable(route = "noBookInfo") {
-                NoBookInfoScreen(navController = navController)
+            composable(route = "noBookInfo/{categoryId}",
+                arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
+                NoBookInfoScreen(navController = navController, bookViewModel, categoryId)
             }
 
 

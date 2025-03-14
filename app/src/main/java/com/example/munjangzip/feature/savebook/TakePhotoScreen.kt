@@ -169,16 +169,16 @@ fun TakePhotoPage(navController: NavController, viewModel: GetBookViewModel = hi
             loadBookState?.result?.title?.let {
                 Log.d("TakePhotoPage", "책 정보 로드 성공: $it")
                 isLoading = false
-                //navController.currentBackStackEntry?.savedStateHandle?.set("isbn_key", stringIsbn )
                 //navController.navigate("bookInfo")
                 navController.navigate("bookInfo/${categoryId}")
 
+                //navController.navigate("noBookInfo/${categoryId}")
 
 
             } ?: run {
                 Log.e("TakePhotoPage", "책 정보 불러오기 실패: 응답이 null")
                 isLoading = false
-                navController.navigate("noBookInfo")
+                navController.navigate("noBookInfo/${categoryId}")
             }
         }
     }
