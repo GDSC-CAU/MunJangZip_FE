@@ -54,4 +54,22 @@ class BookRepository @Inject constructor(
         return api.registerBookInfo("Bearer $accessToken", categoryId,BookRequest(title, author,category, coverImageUrl, isbn))
 
     }
+
+    //책 상세보기
+    suspend fun getBookDetail(bookId: Int): BookResponse<BookDetailResult>? {
+        return try {
+            val accessToken = runBlocking { userPreferences.accessToken.first() }
+            if (accessToken.isNullOrEmpty()) {
+                Log.e("BookRepository", "Access token is null or empty")
+                return null
+            }
+
+            val response = api.getBookDetail("Bearer $accessToken", bookId)
+            if (response.isSuccessful) response.body() else null
+        } catch (e: Exception) {
+            Log.e("BookRepository", "Error fetching book detail: ${e.message}")
+            null
+        }
+    }
+
 }
