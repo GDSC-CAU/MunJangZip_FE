@@ -19,7 +19,7 @@ class BookRepository @Inject constructor(
             return null
             }
 
-            // ✅ categoryId 값 확인
+            //categoryId 값 확인
             Log.d("BookRepository", "Sending request with categoryId: $categoryId")
 
             val response = api.checkBookList("Bearer $accessToken", categoryId)
