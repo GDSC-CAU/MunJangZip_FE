@@ -49,13 +49,18 @@ fun MainApp() {
                 CategoryScreen(navController = navController)
             }
 
-            composable(route = "booklist") {
-                BookListScreen(navController = navController)
+            composable(route = "booklist/{categoryId}") { backStackEntry ->
+                val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull() ?: 0
+                BookListScreen(navController = navController, categoryId = categoryId)
             }
 
-            composable(route = "takephoto") {
-                TakePhotoPage(navController = navController)
+
+            // 책 등록 버튼에 카테고리 id 넘겨주기
+            composable(route = "takephoto/{categoryId}") { backStackEntry ->
+                val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull() ?: 0
+                TakePhotoPage(navController = navController, categoryId = categoryId)
             }
+
 
             // 카테고리 추가 네비게이션
             composable(route = "addcategory") {

@@ -1,6 +1,7 @@
 package com.example.munjangzip.feature.savebook
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,7 +45,8 @@ import com.example.munjangzip.ui.theme.Gray10
 import com.example.munjangzip.ui.theme.Ivory
 
 @Composable
-fun TakePhotoPage(navController: NavController) {
+fun TakePhotoPage(navController: NavController, categoryId: Int) {
+    Log.d("TakePhotoPage", "Received categoryId: $categoryId")
     val context = LocalContext.current
 
     var isSuccess = true //isbn 넘버로 데이터를 불러오기 성공여부

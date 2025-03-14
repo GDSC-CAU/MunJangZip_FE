@@ -79,7 +79,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://ddddddddd0/") // 백엔드 주소
+            .baseUrl("http://ㅇㅇㅇㅇ/") // 백엔드 주소
             .client(client) // OkHttpClient 적용
             .addConverterFactory(GsonConverterFactory.create())
             .build()
