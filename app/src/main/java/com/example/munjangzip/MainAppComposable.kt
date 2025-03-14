@@ -137,14 +137,24 @@ fun MainApp(userPreferences: UserPreferences) {
             }
 
 
-            //메모 생성 페이지 네비게이션
-            composable(route = "createMemo") {
-                CreateMemo(navController = navController)
+            // 메모 생성 페이지 네비게이션 (bookId 포함)
+            composable(
+                route = "createMemo?bookId={bookId}",
+                arguments = listOf(navArgument("bookId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val bookId = backStackEntry.arguments?.getInt("bookId") ?: 0
+                CreateMemo(navController = navController, bookId = bookId)
             }
-            //메모 생성 선택 페이지 네비게이션
-            composable(route = "selectMemo") {
-                SelectMemo(navController = navController)
+
+// SelectMemo 페이지 네비게이션 (bookId 포함)
+            composable(
+                route = "selectMemo?bookId={bookId}",
+                arguments = listOf(navArgument("bookId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val bookId = backStackEntry.arguments?.getInt("bookId") ?: 0
+                SelectMemo(navController = navController, bookId = bookId)
             }
+
             composable("createMemoPic") {
                 CreateMemoPic(navController = navController)
             }

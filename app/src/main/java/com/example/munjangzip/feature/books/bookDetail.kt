@@ -153,12 +153,13 @@ fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookL
                     Spacer(modifier = Modifier.height(10.dp))
 
                     Button(
-                        onClick = { navController.navigate("selectMemo") },
+                        onClick = { navController.navigate("selectMemo?bookId=$bookId") },
                         modifier = Modifier.width(110.dp).height(40.dp).clip(RoundedCornerShape(10.dp)),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFF2D3))
                     ) {
                         Text(text = "메모하기", fontSize = 14.sp, color = Color.DarkGray, fontWeight = FontWeight.SemiBold)
                     }
+
                 } else {
                     CircularProgressIndicator()
                 }
