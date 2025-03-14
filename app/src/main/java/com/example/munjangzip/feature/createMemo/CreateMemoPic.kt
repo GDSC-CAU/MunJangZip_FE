@@ -103,19 +103,21 @@ fun CreateMemoPic(navController: NavController, bookId: Int) {
                     Button(
                         onClick = {
                             val context = navController.context
-                            val file = saveImageToStorage(context, uri)
+                            val file = saveImageToStorage(context, imageUri!!)
                             file?.let {
-                                viewModel.uploadImage(bookId, it) { imageUrl ->
+                                viewModel.uploadImage(bookId, it, navController) { imageUrl ->
                                     uploadedImageUrl = imageUrl
                                 }
                             }
                         },
-                        modifier = Modifier.width(200.dp).height(60.dp).shadow(8.dp, RoundedCornerShape(30.dp)),
+                        modifier = Modifier.width(200.dp).height(60.dp).shadow(8.dp, RoundedCornerShape(20.dp)),
                         shape = RoundedCornerShape(20.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE5EFFD))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE5EFFD)),
+                        enabled = imageUri != null // 사진이 있어야 업로드 가능
                     ) {
                         Text("사진 업로드", fontSize = 20.sp, color = Color.Gray)
                     }
+
                 }
             }
         }
@@ -158,15 +160,19 @@ class CreateMemoPicViewModel @Inject constructor(
         return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
     }
 
-    fun uploadImage(bookId: Int, file: File, onResult: (String?) -> Unit) {
+    fun uploadImage(bookId: Int, file: File, navController: NavController, onResult: (String?) -> Unit) {
         val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
         val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
         apiService.uploadMemoImage(bookId, image = body).enqueue(object : Callback<MemoImageResponse> {
             override fun onResponse(call: Call<MemoImageResponse>, response: Response<MemoImageResponse>) {
                 if (response.isSuccessful) {
-                    onResult(response.body()?.imageUrl)
-                    Log.d("CreateMemoPic", "업로드 성공: ${response.body()?.imageUrl}")
+                    val imageUrl = response.body()?.imageUrl
+                    Log.d("CreateMemoPic", " 업로드 성공: $imageUrl")
+                    // 업로드 성공하면(이전 화면으로 돌아가기)
+                    navController.popBackStack()
+
+                    onResult(imageUrl)
                 } else {
                     Log.e("CreateMemoPic", "업로드 실패: ${response.errorBody()?.string()}")
                     onResult(null)
