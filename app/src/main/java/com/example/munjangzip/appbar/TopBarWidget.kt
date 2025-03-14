@@ -27,14 +27,6 @@ fun TopBarWidget (navController: NavController) {
                 )
             }
         },
-        actions = {
-            IconButton(onClick = { /* 나중에 내정보 페이지로 이동 해야됨 */ }) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_paw),
-                    contentDescription = "내정보 페이지 이동"
-                )
-            }
-        },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent) // TopBar 투명
     )
 }
