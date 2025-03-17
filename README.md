@@ -70,3 +70,31 @@ auth - 로그인,회원가입 페이지들
 
 ## network 패키지
 API 요청시 헤더에 자동으로 accessToken을 추가하는 interceptor를 만들어서 retrofit에 적용
+
+
+## API구현 부분 로직
+➕ Notice
+알아야할게 있어서 작성합니다
+
+헤드에 엑세스 토큰 넣어서 요청해야되는데 계속 넘기는게 어지러울까봐 토큰 분리했어요
+어지러울까봐 예시 보여주고 싶어서 카테고리추가 연결해놨습니다!
+accessToken 포함해서 요청 보내는 방법 =
+RetrofitApi 작성하기 (파일에선 CategoryApi)
+Request/Response 데이터 클래스 추가  (view 모델에서 api 요청할 수 있게 레포 만들기 & Retrofit API가 사용할 데이터 모델 만들기!!)
+ViewModel에서 API 호출&상태 관리 (AddCategoryViewModel) 
+요청 보낼 버튼 로직처리 (AddCategoryScreen ->onClick = { viewModel.addCategory(text) } 이런식으로)
+di > appModule에 API ,레포 추가하기
+토큰 관련 추가사항
+DataStore설정하기
+로그인 성공시 accessToken 을 저장해야돼서 DataStore 사용함.
+data > UserPreferences.kt 파일입니다
+로그인하면 aaccessToken을 DataStore에 저장하기
+SignInViewModel.kt
+대충 토큰 저장하는 부분이 있습니다
+3.이제 API 요청시 헤더에 자동으로 accessToken을 추가하는 interceptor를 만들어서 retrofit에 적용하기
+
+network > authInterceptor.kt
+대충 헤더에 자동 추가하는 코드입니다
+Retrofit을 설정할 때 AuthInterceptor를 추가하면, 모든 API 요청에 Authorization 헤더가 자동으로 포함
+Retrofit 클라이언트에 AuthInterceptor 적용
+di > AppModule.kt
