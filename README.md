@@ -5,15 +5,12 @@ MainAppComposable.kt
 페이지 이동하는 라우팅
 
 ## ui 패키지
-SimpleBackGround.kt
-배경(초원 그림)
+SimpleBackGround.kt - 배경(초원 그림)   
 
-BackGround.kt   
-배경(초원 그림 + 고양이)   
+BackGround.kt - 배경(초원 그림 + 고양이)      
 
-BackGroundBubble.kt  
-배경 (초원 그림 + 고양이 + 말풍선)   
-- 말풍선에 쓰일 이미지를 인수로 전달
+BackGroundBubble.kt - 배경 (초원 그림 + 고양이 + 말풍선)   
+말풍선에 쓰일 이미지를 인수로 전달
 
 ### theme 패키지 (기본으로 있는 패키지)
 Color.kt   
@@ -23,6 +20,10 @@ Color.kt
 TopBarWidget.kt   
 이런 구조의 탑바는 fun TopBarWidget() 실행   
 ![image](https://github.com/user-attachments/assets/7bc6429a-7cb1-4288-ab88-5da392dbc373)
+   
+원래 기획했던 이 탑바는 발바닥 아이콘 기능인 마이페이지가 아직 구현전이라 발바닥 아이콘을 뺌
+![image](https://github.com/user-attachments/assets/743072e5-b6c3-4e3a-99fd-45846cc3063d)
+
 
 ## data 패키지
 사용자 토큰(accessToken, refreshToken)을 관리하는 역할   
@@ -55,14 +56,14 @@ auth - 로그인,회원가입 페이지들
 ![image](https://github.com/user-attachments/assets/819c415b-967a-4ce0-8216-51e178dc75b7)
 
 ### loadBookInfo
-책 정보 불러오기 성공
+책 정보 불러오기 성공   
 ![image](https://github.com/user-attachments/assets/d6a13025-cc9e-49d5-801c-ea807996bfa3)
-책정보 불러오기 실패
+책정보 불러오기 실패   
 ![image](https://github.com/user-attachments/assets/c8353da3-88d5-4ba0-b05a-7934080e678d)
 
 
 #### savebook   
-![image](https://github.com/user-attachments/assets/50226c1e-9652-46c3-9dfe-50ae87431e16)
+![image](https://github.com/user-attachments/assets/03539991-c420-4fa1-a2bb-69c25f37d114)
 
 ### selectMemo
 ![image](https://github.com/user-attachments/assets/73498f0d-8be0-4c94-a5af-e4ac4dca3a2c)
