@@ -85,7 +85,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://dd/") // 백엔드 주소
+            .baseUrl("aa") // 백엔드 주소
 
             .client(client) // OkHttpClient 적용
             .addConverterFactory(GsonConverterFactory.create())
@@ -188,8 +188,6 @@ object AppModule {
     fun provideMemoImageApiService(retrofit: Retrofit): MemoImageApiService {
         return retrofit.create(MemoImageApiService::class.java)
     }
-
-
 
 
 }

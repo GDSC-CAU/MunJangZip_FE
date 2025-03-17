@@ -66,17 +66,11 @@ fun MainApp(userPreferences: UserPreferences) {
                 SignUpScreen(navController = navController)
             }
 
-            //카테고리 페이지 (카테고리 목록들이 뜨는 페이지)
+            //카테고리 페이지 (카테고리 목록들이 뜨는 메인 페이지)
             composable(route = "category") {
                 CategoryScreen(navController = navController)
             }
 
-//            composable(route = "booklist/{categoryId}") { backStackEntry ->
-//                val categoryId = backStackEntry.arguments?.getInt("categoryId")
-//                if (categoryId != null) {
-//                    BookListScreen(navController = navController, categoryId = categoryId)
-//                }
-//            }
 
             //카테고리별 북리스트 페이지
             composable(
@@ -92,6 +86,9 @@ fun MainApp(userPreferences: UserPreferences) {
 //                val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 1
 //                TakePhotoPage(navController = navController, bookViewModel, categoryId = categoryId)
 //            }
+
+
+            //바코드를 촬영 카메라 실행 직전 (안내)페이지. "책의 바코드를 촬영하면 자동으로 책이 등록 돼요"
             composable(
                 route = "takephoto/{categoryId}",
                 arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
@@ -107,14 +104,14 @@ fun MainApp(userPreferences: UserPreferences) {
                 AddCategoryScreen(navController = navController)
             }
 
-            // 책 상세 페이지 네비게이션
+            // 책 상세 페이지 네비게이션 (bookId 포함)
             composable(route = "bookDetail/{bookId}") { backStackEntry ->
                 val bookId = backStackEntry.arguments?.getString("bookId")?.toIntOrNull() ?: 0
                 BookDetailScreen(navController = navController, bookId = bookId)
             }
 
 
-
+            //바코드로 촬영한 책의 정보를 표시하는 페이지
             composable(route = "bookInfo/{categoryId}") { backStackEntry ->
                 val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull() ?: 1
                 LoadBookInfoScreen(
@@ -162,10 +159,6 @@ fun MainApp(userPreferences: UserPreferences) {
                 val bookId = backStackEntry.arguments?.getInt("bookId") ?: 0
                 CreateMemoPic(navController = navController, bookId = bookId)
             }
-
-
-
-
 
 
         }
