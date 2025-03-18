@@ -1,5 +1,9 @@
 package com.example.munjangzip.feature.booklist
 
+/*
+bookList 페이지
+ */
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

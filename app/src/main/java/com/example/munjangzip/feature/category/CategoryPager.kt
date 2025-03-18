@@ -1,5 +1,9 @@
 package com.example.munjangzip.feature.category
 
+/*
+CategoryScreen에서 실행할 pager을 표시하는 함수
+ */
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

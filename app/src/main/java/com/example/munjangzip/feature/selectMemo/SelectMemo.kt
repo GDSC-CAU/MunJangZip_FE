@@ -1,5 +1,7 @@
 package com.example.munjangzip.feature.selectMemo
 
+
+//글쓰기를 할지, 사진을 추가할지 메모 유형을 선택하는 화면
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

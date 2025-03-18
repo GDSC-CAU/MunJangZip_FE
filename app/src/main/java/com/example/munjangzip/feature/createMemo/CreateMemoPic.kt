@@ -1,5 +1,9 @@
 package com.example.munjangzip.feature.createMemo
 
+/*
+사진 촬영으로 필사 추가
+ */
+
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri

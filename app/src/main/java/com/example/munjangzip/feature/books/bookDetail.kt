@@ -1,5 +1,9 @@
 package com.example.munjangzip.feature.books
 
+/*
+북리스트 그리드에 있는 책을 눌렀을 때 나오는 책 상세 페이지
+ */
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

@@ -1,5 +1,9 @@
 package com.example.munjangzip.feature.auth
 
+/*
+로그인, 회원가입 화면으로 가기전 스타트 화면
+로그인을 할지 회원가입 할지 선텍
+*/
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

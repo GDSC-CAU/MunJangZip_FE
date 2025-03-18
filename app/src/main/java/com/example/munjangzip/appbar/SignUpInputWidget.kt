@@ -1,5 +1,9 @@
 package com.example.munjangzip.appbar
 
+/*
+signin, signup 페이지에서 사용할 텍스트 필드
+ */
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

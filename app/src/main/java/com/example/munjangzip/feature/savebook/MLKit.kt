@@ -1,5 +1,8 @@
 package com.example.munjangzip.feature.savebook
 
+/*
+바코드 촬영을 위한 ML Kit
+ */
 
 import android.app.Activity
 import android.util.Log
